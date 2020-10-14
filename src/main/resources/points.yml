@@ -1,0 +1,39 @@
+#Support up to 30 points
+demo1:
+  setting:
+    #Point sign, Please do not modify the currency mark after confirmation
+    sign: demo1
+    #Initial amount of point
+    initial-bal: 0.0
+    #Does the point enable ranking
+    enable-baltop: true
+    #Are players allowed to use the pay command
+    allow-pay-command: true
+    #Whether to enable BungeeCord synchronization
+    enable-bungeecord: false
+  display:
+    #The name of points displayed
+    singular-name: dollar
+    plural-name: dollars
+    #Is the balance an integer
+    integer-bal: false
+    #Thousand bit separator
+    thousands-separator: ','
+    #Display format
+    display-format: '%balance% %currencyname%'
+    #Maximum amount (default is maximum)
+    max-number: '100000000000000000000000000'
+demo2:
+  setting:
+    sign: demo2
+    initial-bal: 0.0
+    enable-baltop: true
+    allow-pay-command: true
+    enable-bungeecord: false
+  display:
+    singular-name: dollar
+    plural-name: dollars
+    integer-bal: false
+    thousands-separator: ','
+    display-format: '%balance% %currencyname%'
+    max-number: '100000000000000000000000000'

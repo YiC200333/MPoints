@@ -1,0 +1,28 @@
+name: MPoints
+version: ${project.version}
+main: me.yic.mpoints.MPoints
+author: YiC
+load: STARTUP
+softdepend: [ DatabaseDrivers, PlaceholderAPI ]
+
+commands:
+  mpoints:
+    usage: /<command>
+    description: MPoints.
+    aliases: [ mp ]
+
+permissions:
+  mpoints.user.balance:
+    default: true
+    children:
+      mpoints.user.balance.other: true
+  mpoints.user.balancetop:
+    default: true
+  mpoints.admin.list:
+    default: op
+  mpoints.admin.give:
+    default: op
+  mpoints.admin.take:
+    default: op
+  mpoints.admin.set:
+    default: op
