@@ -2,11 +2,15 @@ package me.yic.mpoints.utils;
 
 import me.yic.mpoints.MPoints;
 import me.yic.mpoints.data.caches.PointsCache;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 public class PointsConfig {
 
@@ -45,6 +49,10 @@ public class PointsConfig {
 			String separator = section.getString(u + ".display.thousands-separator");
 			String displayformat = section.getString(u + ".display.display-format");
 			String maxnumber = section.getString(u + ".display.max-number");
+			if (section.getBoolean(u + ".quick-command.enable")){
+				Command qcommand  = new QuickCommand(section.getString(u + ".quick-command.command"),sign);
+				MPoints.commandMap.register(section.getString(u + ".quick-command.command"),qcommand);
+			}
 			if (PointsCache.pointsigns.contains(sign)){
 				MPoints.getInstance().logger("Exist the same sign of point");
 				return false;

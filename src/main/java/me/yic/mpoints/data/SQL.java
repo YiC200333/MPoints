@@ -32,18 +32,21 @@ public class SQL {
 	}
 
 	public static void getwaittimeout() {
-		if (MPoints.config.getBoolean("Settings.mysql")) {
+		if (MPoints.config.getBoolean("Settings.mysql") && !MPoints.allowHikariConnectionPooling()) {
 			try {
 				Connection connection = database.getConnectionAndCheck();
 
 				String query = "show variables like 'wait_timeout'";
 
 				PreparedStatement statement = connection.prepareStatement(query);
+
 				ResultSet rs = statement.executeQuery();
 				if (rs.next()) {
 					Integer waittime = rs.getInt(2);
-					DatabaseConnection.waittimeout = Integer.getInteger(String.valueOf(waittime*0.9));
-					database.setwaittimeout();
+					if (waittime > 50){
+						DatabaseConnection.waittimeout = waittime - 30;
+					}
+
 				}
 
 				rs.close();
@@ -89,11 +92,11 @@ public class SQL {
 				}
 				if (MPoints.config.getBoolean("Settings.mysql")) {
 					query2 = "CREATE TABLE IF NOT EXISTS mpoints_" + suffix + sign
-							+ " (UID varchar(50) not null, balance decimal(30,2) not null, "
+							+ " (UID varchar(50) not null, balance decimal(30,2) not null, hidden int(5) not null, "
 							+ "primary key (UID)) DEFAULT CHARSET = " + encoding + ";";
 				} else {
 					query2 = "CREATE TABLE IF NOT EXISTS mpoints_" + suffix + sign
-							+ " (UID varchar(50) not null, balance decimal(30,2) not null, "
+							+ " (UID varchar(50) not null, balance decimal(30,2) not null, hidden int(5) not null, "
 							+ "primary key (UID));";
 				}
 				statement.executeUpdate(query2);
@@ -128,17 +131,18 @@ public class SQL {
 					break;
 				}
 				if (MPoints.config.getBoolean("Settings.mysql")) {
-					query1 = "INSERT INTO mpoints_" + suffix + sign + "(UID,balance) values(?,?) "
+					query1 = "INSERT INTO mpoints_" + suffix + sign + "(UID,balance,hidden) values(?,?,?) "
 							+ "ON DUPLICATE KEY UPDATE UID = ?";
 				} else {
-					query1 = "INSERT INTO mpoints_" + suffix + sign + "(UID,balance) values(?,?) ";
+					query1 = "INSERT INTO mpoints_" + suffix + sign + "(UID,balance,hidden) values(?,?,?) ";
 				}
                 x = x + 1;
 				statement = co_a.prepareStatement(query1);
 				statement.setString(1, UID);
 				statement.setBigDecimal(2, PointsCache.getPointFromCache(sign).getinitialbal());
+				statement.setInt(3, 0);
 				if (MPoints.config.getBoolean("Settings.mysql")) {
-					statement.setString(3, UID);
+					statement.setString(4, UID);
 				}
 				statement.executeUpdate();
 			}
@@ -367,9 +371,10 @@ public class SQL {
 						break;
 					}
 					PreparedStatement statementa = connection.prepareStatement(
-							"select * from mpoints_" + suffix + sign + " order by balance desc limit 10");
+							"select * from mpoints_" + suffix + sign + " where hidden != '1' order by balance desc limit 10");
 					ResultSet rsa = statementa.executeQuery();
 					List<UUID> uidlist = new ArrayList<>();
+					List<String> namelist = new ArrayList<>();
 					while (rsa.next()) {
 						uidlist.add(UUID.fromString(rsa.getString(1)));
 					}
@@ -381,7 +386,6 @@ public class SQL {
 								"select * from mpoints_" + suffix + dataname1 + " where UID = ?");
 						statementb.setString(1, uu.toString());
 						ResultSet rsb = statementb.executeQuery();
-						List<String> namelist = new ArrayList<>();
 						while (rsb.next()) {
 							namelist.add(rsb.getString(2));
 						}
@@ -410,6 +414,22 @@ public class SQL {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void hidetop(UUID u, String sign, Integer type) {
+		Connection connection = database.getConnectionAndCheck();
+		try {
+			String query = " set hidden = ? where UID = ?";
+			PreparedStatement statement = connection.prepareStatement("update mpoints_" + suffix + sign + query);
+			statement.setInt(1, type);
+			statement.setString(2, u.toString());
+			statement.executeUpdate();
+			statement.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		database.closeHikariConnection(connection);
 	}
 
 	public static void record(RecordData x,Connection co) {

@@ -65,6 +65,10 @@ public class DataCon extends MPoints {
 		SQL.getBaltop();
 	}
 
+	public static void setTopBalHide(UUID u,String sign, Integer type) {
+		SQL.hidetop(u,sign,type);
+	}
+
 	public static void save(UUID UID, String sign, BigDecimal balance, BigDecimal amount, Boolean isAdd, RecordData x) {
 		SQL.save(UID, sign, balance, amount, isAdd, x);
 	}

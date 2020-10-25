@@ -4,6 +4,7 @@ import me.yic.mpoints.data.DataCon;
 import me.yic.mpoints.data.SQL;
 import me.yic.mpoints.data.caches.Cache;
 import me.yic.mpoints.depend.Placeholder;
+import me.yic.mpoints.listeners.BSListening;
 import me.yic.mpoints.listeners.ConnectionListeners;
 import me.yic.mpoints.listeners.SPsync;
 import me.yic.mpoints.message.Messages;
@@ -13,11 +14,14 @@ import me.yic.mpoints.utils.PointsConfig;
 import me.yic.mpoints.utils.UpdateConfig;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.util.HashMap;
 
 public class MPoints extends JavaPlugin {
 
@@ -30,6 +34,7 @@ public class MPoints extends JavaPlugin {
 	private Placeholder papiExpansion = null;
 	public static Boolean ddrivers = false;
 	public static Boolean hasbcpoint = false;
+	public static CommandMap commandMap = null;
 
 	public void onEnable() {
 		instance = this;
@@ -51,6 +56,14 @@ public class MPoints extends JavaPlugin {
 			ddrivers = true;
 		}
 
+		try {
+			final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+			bukkitCommandMap.setAccessible(true);
+			commandMap = (CommandMap) bukkitCommandMap.get(getServer());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		getServer().getPluginManager().registerEvents(new ConnectionListeners(), this);
 
 		metrics = new Metrics(this, 9061);
@@ -69,6 +82,8 @@ public class MPoints extends JavaPlugin {
 		}
 
 		Cache.baltop();
+
+		loadguidshop();
 
 		if (hasbcpoint) {
 			if (isBungeecord()) {
@@ -169,6 +184,12 @@ public class MPoints extends JavaPlugin {
 		update_config();
 		reloadConfig();
 		config = getConfig();
+	}
+
+	private void loadguidshop() {
+		if (Bukkit.getPluginManager().getPlugin("BossShopPro") != null) {
+			getServer().getPluginManager().registerEvents(new BSListening(), this);
+		}
 	}
 
 	private void update_config() {

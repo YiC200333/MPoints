@@ -5,7 +5,7 @@
 
     <groupId>me.yic</groupId>
     <artifactId>MPoints</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -46,6 +46,10 @@
 
                     <meminitial>512m</meminitial>
                     <maxmem>512m</maxmem>
+
+                    <compilerArguments>
+                        <extdirs>${project.basedir}/src/main/libs</extdirs>
+                    </compilerArguments>
                 </configuration>
             </plugin>
 

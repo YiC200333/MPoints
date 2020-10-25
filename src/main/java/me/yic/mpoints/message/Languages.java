@@ -52,6 +52,8 @@ public class Languages {
 		ll.add("top_text");
 		ll.add("top_subtitle");
 		ll.add("top_nodata");
+		ll.add("top_hidden");
+		ll.add("top_displayed");
 		ll.add("pay");
 		ll.add("pay_receive");
 		ll.add("pay_fail");
@@ -77,9 +79,10 @@ public class Languages {
 		ll.add("help7");
 		ll.add("help8");
 		ll.add("help9");
-		//ll.add("help10");
-		//ll.add("help11");
+		ll.add("help10");
+		ll.add("help11");
 		ll.add("help12");
+		ll.add("help13");
 		return ll;
 
 	}
@@ -95,6 +98,8 @@ public class Languages {
 		mess.put("top_text", "&e%index%: %player% - %balance%");
 		mess.put("top_subtitle", "&7TOP10 refreshed every 5 minutes");
 		mess.put("top_nodata", "&cNo TOP10 data");
+		mess.put("top_hidden", "&a%player% is hidden from %pointname% data");
+		mess.put("top_displayed", "&a%player% is displayed from %pointname% data");
 		mess.put("pay", "&cYou pay %player% %amount% %pointname%");
 		mess.put("pay_receive", "&aYou receive %amount% %pointname% from %player%");
 		mess.put("pay_fail", "&cYour %pointname% is less than %amount%");
@@ -111,18 +116,19 @@ public class Languages {
 		mess.put("money_set_receive", "&cAdministrator set your %pointname% to %amount%");
 		mess.put("no_permission", "&cYou don't have permission to use this command");
 		mess.put("help_title_full", "&6=============== [MPoints] HELP ===============");
-		mess.put("help1", "&6mpoints balance <pointname>  -  Displays your balance of point");
-		mess.put("help2", "&6mpoints balance <pointname> <player>  -  Displays <player>'s balance of point");
-		mess.put("help3", "&6mpoints pay <pointname> <player> <amount>  -  Pay <player> <amount> point");
-		mess.put("help4", "&6mpoints balancetop <pointname>  -  Displays TOP10");
+		mess.put("help1", "&6mpoints <pointname> balance  -  Displays your balance of point");
+		mess.put("help2", "&6mpoints <pointname> balance <player>  -  Displays <player>'s balance of point");
+		mess.put("help3", "&6mpoints <pointname> pay <player> <amount>  -  Pay <player> <amount> point");
+		mess.put("help4", "&6mpoints <pointname> balancetop  -  Displays TOP10");
 		mess.put("help5", "&6mpoints version  -  Display plugin version information");
 		mess.put("help6", "&6mpoints list  -  List all points");
-		mess.put("help7", "&6mpoints give <pointname> <player> <amount>  -  give <player> <amount> point");
-		mess.put("help8", "&6mpoints take <pointname> <player> <amount>  -  take <amount> point from <player>");
-		mess.put("help9", "&6mpoints set <pointname> <player> <amount>  -  set <player>'s point to <amount>");
-		mess.put("help10", "&6mpoints give <pointname> * <all/online> <amount> <reason>  -  give <all/online player> <amount> point");
-		mess.put("help11", "&6mpoints take <pointname> * <all/online> <amount> <reason>  -  take <amount> point from <all/online player>");
-		mess.put("help12", "&6mpoints reload -  Reload message.yml");
+		mess.put("help7", "&6mpoints <pointname> give <player> <amount>  -  give <player> <amount> point");
+		mess.put("help8", "&6mpoints <pointname> take <player> <amount>  -  take <amount> point from <player>");
+		mess.put("help9", "&6mpoints <pointname> set <player> <amount>  -  set <player>'s point to <amount>");
+		mess.put("help10", "&6mpoints <pointname> give * <all/online> <amount> <reason>  -  give <all/online player> <amount> point");
+		mess.put("help11", "&6mpoints <pointname> take * <all/online> <amount> <reason>  -  take <amount> point from <all/online player>");
+		mess.put("help12", "&6mpoints <pointname> balancetop hide/display <player>  -  Hide or display a <player>'s data from TOP10");
+		mess.put("help13", "&6mpoints reload -  Reload message.yml");
 	}
 
 	private static void chinese() {
@@ -136,6 +142,8 @@ public class Languages {
 		mess.put("top_text", "&e%index%: %player% - %balance%");
 		mess.put("top_subtitle", "&7TOP10每5分钟刷新一次");
 		mess.put("top_nodata", "&c无玩家经济数据");
+		mess.put("top_hidden", "&a%player% 已从 %pointname% 数据中隐藏");
+		mess.put("top_displayed", "&a%player% 已从 %pointname% 数据中显示");
 		mess.put("pay", "&c你转账给%player% %amount% %pointname%");
 		mess.put("pay_receive", "&a你从 %player% 收到 %amount% %pointname%");
 		mess.put("pay_fail", "&c你的 %pointname% 不足  %amount%");
@@ -152,18 +160,19 @@ public class Languages {
 		mess.put("money_set_receive", "&c管理员设置你的 %pointname% 为  %amount%");
 		mess.put("no_permission", "&c你没有权限使用这个指令");
 		mess.put("help_title_full", "&6=============== [MPoints] 帮助  ===============");
-		mess.put("help1", "&6mpoints balance <pointname>  -  查询点数余额");
-		mess.put("help2", "&6mpoints balance <pointname> <玩家>  -  查询<玩家>点数余额");
-		mess.put("help3", "&6mpoints pay <pointname> <玩家> <金额>  -  转账给<玩家><金额>点数");
-		mess.put("help4", "&6mpoints balancetop <pointname>  -  查询点数排行榜");
+		mess.put("help1", "&6mpoints <pointname> balance  -  查询点数余额");
+		mess.put("help2", "&6mpoints <pointname> balance <玩家>  -  查询<玩家>点数余额");
+		mess.put("help3", "&6mpoints <pointname> pay <玩家> <金额>  -  转账给<玩家><金额>点数");
+		mess.put("help4", "&6mpoints <pointname> balancetop  -  查询点数排行榜");
 		mess.put("help5", "&6mpoints version  -  显示插件版本信息");
 		mess.put("help6", "&6mpoints list  -  列出所有的点数");
-		mess.put("help7", "&6mpoints give <pointname> <玩家> <金额>  -  给与<玩家><金额>点数");
-		mess.put("help8", "&6mpoints take <pointname> <玩家> <金额>  -  从<玩家>取走<金额>点数");
-		mess.put("help9", "&6mpoints set <pointname> <玩家> <金额>  -  设置<玩家>点数为<金额>");
-		mess.put("help10", "&6mpoints give <pointname> * <all/online> <amount> <reason>  -  给与<所有/在线玩家><金额>点数");
-		mess.put("help11", "&6mpoints take <pointname> * <all/online> <amount> <reason>  -  从<所有/在线玩家>取走<金额>点数");
-		mess.put("help12", "&6mpoints reload 重新加载 message.yml");
+		mess.put("help7", "&6mpoints <pointname> give <玩家> <金额>  -  给与<玩家><金额>点数");
+		mess.put("help8", "&6mpoints <pointname> take <玩家> <金额>  -  从<玩家>取走<金额>点数");
+		mess.put("help9", "&6mpoints <pointname> set <玩家> <金额>  -  设置<玩家>点数为<金额>");
+		mess.put("help10", "&6mpoints <pointname> give * <all/online> <amount> <reason>  -  给与<所有/在线玩家><金额>点数");
+		mess.put("help11", "&6mpoints <pointname> take * <all/online> <amount> <reason>  -  从<所有/在线玩家>取走<金额>点数");
+		mess.put("help12", "&6mpoints <pointname> balancetop hide/display <player>  -  将<玩家>的数据从Top10上隐藏或显示");
+		mess.put("help13", "&6mpoints reload 重新加载 message.yml");
 	}
 
 	private static void chinesetw() {
@@ -177,6 +186,8 @@ public class Languages {
 		mess.put("top_text", "&e%index%： %player% - %balance%");
 		mess.put("top_subtitle", "&7TOP10每五分鐘刷新一次");
 		mess.put("top_nodata", "&c無玩家經濟資料");
+		mess.put("top_hidden", "&a%player% 已從 %pointname% 數據中隱藏");
+		mess.put("top_displayed", "&a%player% 已從 %pointname% 數據中顯示");
 		mess.put("pay", "&c你轉帳給 %player% %amount% %pointname%");
 		mess.put("pay_receive", "&a你從 %player% 收到轉帳 %amount% %pointname%");
 		mess.put("pay_fail", "&c你的 %pointname% 不足 %amount%");
@@ -193,18 +204,19 @@ public class Languages {
 		mess.put("money_set_receive", "&c管理員設定你的 %pointname% 為 %amount%");
 		mess.put("no_permission", "&c你沒有許可權使用這個指令");
 		mess.put("help_title_full", "&6=============== [MPoints]幫助 ===============");
-		mess.put("help1", "&6mpoints balance <pointname>  -  查詢點數餘額");
-		mess.put("help2", "&6mpoints balance <玩家> <pointname>  -  査詢<玩家>點數餘額");
-		mess.put("help3", "&6mpoints pay <pointname> <玩家> <金額>  -  轉帳給<玩家><金額>點數");
-		mess.put("help4", "&6mpoints balancetop <pointname>  -  查詢點數排行榜");
+		mess.put("help1", "&6mpoints <pointname> balance  -  查詢點數餘額");
+		mess.put("help2", "&6mpoints <pointname> balance <玩家>  -  査詢<玩家>點數餘額");
+		mess.put("help3", "&6mpoints <pointname> pay <玩家> <金額>  -  轉帳給<玩家><金額>點數");
+		mess.put("help4", "&6mpoints <pointname> balancetop  -  查詢點數排行榜");
 		mess.put("help5", "&6mpoints version  -  顯示插件版本信息");
 		mess.put("help6", "&6mpoints list  -  列出所有的點數");
-		mess.put("help7", "&6mpoints give <pointname> <玩家> <金額>  -  給與<玩家><金額>點數");
-		mess.put("help8", "&6mpoints take <pointname> <玩家> <金額>  -  從<玩家>取走<金額>點數");
-		mess.put("help9", "&6mpoints set <pointname> <玩家> <金額>  -  設定<玩家>點數為<金額>");
-		mess.put("help10", "&6mpoints give <pointname> * <all/online> <amount> <reason>  -  給與<所有/在綫玩家><金额>點數");
-		mess.put("help11", "&6mpoints take <pointname> * <all/online> <amount> <reason>  -  從<所有/在綫玩家>取走<金額>點數");
-		mess.put("help12", "&6mpoints reload 重新加載 message.yml");
+		mess.put("help7", "&6mpoints <pointname> give <玩家> <金額>  -  給與<玩家><金額>點數");
+		mess.put("help8", "&6mpoints <pointname> take <玩家> <金額>  -  從<玩家>取走<金額>點數");
+		mess.put("help9", "&6mpoints <pointname> set <玩家> <金額>  -  設定<玩家>點數為<金額>");
+		mess.put("help10", "&6mpoints <pointname> give * <all/online> <amount> <reason>  -  給與<所有/在綫玩家><金额>點數");
+		mess.put("help11", "&6mpoints <pointname> take * <all/online> <amount> <reason>  -  從<所有/在綫玩家>取走<金額>點數");
+		mess.put("help12", "&6mpoints <pointname> balancetop hide/display <player>  -  將<玩家>的數據從Top10上隱藏或顯示");
+		mess.put("help13", "&6mpoints reload 重新加載 message.yml");
 	}
 
 

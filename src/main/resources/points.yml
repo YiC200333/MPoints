@@ -23,6 +23,11 @@ demo1:
     display-format: '%balance% %currencyname%'
     #Maximum amount (default is maximum)
     max-number: '100000000000000000000000000'
+  quick-command:
+    #Whether to enable quick command
+    enable: true
+    #command name
+    command: mpa
 demo2:
   setting:
     sign: demo2
@@ -37,3 +42,6 @@ demo2:
     thousands-separator: ','
     display-format: '%balance% %currencyname%'
     max-number: '100000000000000000000000000'
+  quick-command:
+    enable: false
+    command: mpb

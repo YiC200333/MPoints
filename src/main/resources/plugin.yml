@@ -3,7 +3,8 @@ version: ${project.version}
 main: me.yic.mpoints.MPoints
 author: YiC
 load: STARTUP
-softdepend: [ DatabaseDrivers, PlaceholderAPI ]
+softdepend: [ DatabaseDrivers, PlaceholderAPI, BossShopPro ]
+loadbefore: [ BossShopPro ]
 
 commands:
   mpoints:
@@ -25,4 +26,6 @@ permissions:
   mpoints.admin.take:
     default: op
   mpoints.admin.set:
+    default: op
+  mpoints.admin.balancetop:
     default: op

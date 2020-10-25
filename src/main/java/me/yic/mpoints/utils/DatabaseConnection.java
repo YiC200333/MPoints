@@ -24,7 +24,7 @@ public class DatabaseConnection {
 	private static final Integer maxLife = MPoints.config.getInt("Pool-Settings.maximum-lifetime");
 	private static final Long idleTime = MPoints.config.getLong("Pool-Settings.idle-timeout");
 	private static boolean secon = false;
-	public static Integer waittimeout = null;
+	public static Integer waittimeout = 30;
 	//============================================================================================
 	public static File userdata = new File(dataFolder, "data.db");
 	//============================================================================================
@@ -77,28 +77,12 @@ public class DatabaseConnection {
 		}
 	}
 
-	public void setwaittimeout() {
-		if (MPoints.allowHikariConnectionPooling() && waittimeout!=null){
-			if (!MPoints.config.getBoolean("Pool-Settings.advanced.autoset")) {
-				if (waittimeout >= 3500) {
-					hikari.setMaxLifetime(waittimeout);
-					hikari.setIdleTimeout(Integer.getInteger(String.valueOf(waittimeout / 3)));
-				} else {
-					if (!secon) {
-						MPoints.getInstance().logger("MySQL 的 wait_timeout 值过小,不推荐开启连接池");
-					}
-				}
-			}
-		}
-	}
-
 	public boolean setGlobalConnection() {
 		setTimezone();
 		setDriver();
 		try {
 			if (MPoints.allowHikariConnectionPooling()) {
 				createNewHikariConfiguration();
-				setwaittimeout();
 				Connection connection = getConnection();
 				closeHikariConnection(connection);
 			} else {
@@ -181,9 +165,8 @@ public class DatabaseConnection {
 					return setGlobalConnection();
 				}
 
-				if (MPoints.config.getBoolean("Settings.mysql") && waittimeout!=null) {
+				if (MPoints.config.getBoolean("Settings.mysql")) {
 					if (!connection.isValid(waittimeout)) {
-						close();
 						secon = false;
 						return setGlobalConnection();
 					}
@@ -203,9 +186,6 @@ public class DatabaseConnection {
 
 		try {
 			connection.close();
-			if (waittimeout != null && waittimeout < 3500) {
-				hikari.evictConnection(connection);
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

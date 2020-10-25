@@ -128,9 +128,9 @@ public class Cache {
         if (MPoints.config.getBoolean("Settings.mysql") && MPoints.config.getBoolean("Settings.transaction-record")) {
             x = new RecordData(type, null, null, sign, BigDecimal.ZERO, amount, isAdd, reason);
         }
-        DataCon.saveall(targettype, sign, amount, isAdd, x);
+        DataCon.saveall(sign, targettype, amount, isAdd, x);
         if (MPoints.isBungeecord() && PointsCache.getPointFromCache(sign).getenablebc()) {
-            sendmessaveall(targettype, sign, amount, isAdd);
+            sendmessaveall(sign, targettype, amount, isAdd);
         }
     }
 

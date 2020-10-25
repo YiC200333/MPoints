@@ -630,29 +630,6 @@ public class Messages {
 					newMessage = "§6コンソールがこの命令を使えできません";
 				}
 				break;
-			case "MySQL 的 wait_timeout 值过小,不推荐开启连接池":
-				if (lang.equalsIgnoreCase("English")) {
-					newMessage = "’wait_timeout‘ of value is too small in MySQL. It is not recommended to use the connection pool";
-				}
-				if (lang.equalsIgnoreCase("French")) {
-					newMessage = "’wait_timeout‘ of value is too small in MySQL. It is not recommended to use the connection pool";
-				}
-				if (lang.equalsIgnoreCase("Spanish")) {
-					newMessage = "’wait_timeout‘ of value is too small in MySQL. It is not recommended to use the connection pool";
-				}
-				if (lang.equalsIgnoreCase("Russian")) {
-					newMessage = "’wait_timeout‘ of value is too small in MySQL. It is not recommended to use the connection pool";
-				}
-				if (lang.equalsIgnoreCase("ChineseTW")) {
-					newMessage = "MySQL 的 wait_timeout 值過小,不推薦開啓連接池";
-				}
-				if (lang.equalsIgnoreCase("Turkish")) {
-					newMessage = "’wait_timeout‘ of value is too small in MySQL. It is not recommended to use the connection pool";
-				}
-				if (lang.equalsIgnoreCase("Japanese")) {
-					newMessage = "’wait_timeout‘ of value is too small in MySQL. It is not recommended to use the connection pool";
-				}
-				break;
 		}
 		return newMessage;
 	}

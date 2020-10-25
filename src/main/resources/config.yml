@@ -38,15 +38,11 @@ MySQL:
 #Connection pool settings
 Pool-Settings:
   #use connection pool or not
-  usepool: true
+  usepool: false
   maximum-pool-size: 10
   minimum-idle: 10
-  advanced:
-    #Whether to use automatic settings
-    #If you need to manually set, please set to false
-    autoset: true
-    maximum-lifetime: 180000
-    idle-timeout: 60000
+  maximum-lifetime: 180000
+  idle-timeout: 60000
 
 
 #BungeeCord settings
