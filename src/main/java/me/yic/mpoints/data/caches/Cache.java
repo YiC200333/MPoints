@@ -90,13 +90,16 @@ public class Cache {
         try {
             output.writeUTF("balance");
             output.writeUTF(MPoints.getSign());
+            output.writeUTF(sign);
             output.writeUTF(u.toString());
             output.writeUTF(amount.toString());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        if (MPoints.isBungeecord() && PointsCache.getPointFromCache(sign).getenablebc()) {
         Bukkit.getOnlinePlayers().iterator().next().sendPluginMessage(MPoints.getInstance(), "mpoints:acb", stream.toByteArray());
+        }
     }
 
 
