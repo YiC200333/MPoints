@@ -24,7 +24,7 @@ public class DatabaseConnection {
 	private static final Integer maxLife = MPoints.config.getInt("Pool-Settings.maximum-lifetime");
 	private static final Long idleTime = MPoints.config.getLong("Pool-Settings.idle-timeout");
 	private static boolean secon = false;
-	public static Integer waittimeout = 30;
+	public static Integer waittimeout = 10;
 	//============================================================================================
 	public static File userdata = new File(dataFolder, "data.db");
 	//============================================================================================
@@ -34,7 +34,7 @@ public class DatabaseConnection {
 
 	private void createNewHikariConfiguration() {
 		hikari = new HikariDataSource();
-		hikari.setPoolName("XConomy");
+		hikari.setPoolName("MPoints");
 		hikari.setJdbcUrl(url);
 		hikari.setUsername(username);
 		hikari.setPassword(password);

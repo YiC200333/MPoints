@@ -18,7 +18,7 @@ public class Updater extends BukkitRunnable {
 	@Override
 	public void run() {
 		try {
-			URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=75669");
+			URL url = new URL("https://api.spigotmc.org/legacy/update.php?resource=85184");
 			URLConnection conn = url.openConnection();
 
 			newVersion = new BufferedReader(new InputStreamReader(conn.getInputStream())).readLine();
@@ -34,12 +34,12 @@ public class Updater extends BukkitRunnable {
 			if (MPoints.getInstance().lang().equalsIgnoreCase("Chinese")
 					| MPoints.getInstance().lang().equalsIgnoreCase("ChineseTW")) {
 				MPoints.getInstance().logger("发现新版本 " + newVersion);
-				MPoints.getInstance().logger("https://www.mcbbs.net/thread-962904-1-1.html");
+				MPoints.getInstance().logger("https://www.mcbbs.net/thread-1130411-1-1.html");
 				return;
 			}
 
 			MPoints.getInstance().logger("Discover the new version " + newVersion);
-			MPoints.getInstance().logger("https://www.spigotmc.org/resources/xconomy.75669/");
+			MPoints.getInstance().logger("https://www.spigotmc.org/resources/mpoints.85184/");
 
 		} catch (Exception exception) {
 			MPoints.getInstance().logger("检查更新失败");

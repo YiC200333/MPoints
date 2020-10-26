@@ -10,6 +10,7 @@ import me.yic.mpoints.listeners.SPsync;
 import me.yic.mpoints.message.Messages;
 import me.yic.mpoints.message.MessagesManager;
 import me.yic.mpoints.task.Baltop;
+import me.yic.mpoints.task.Updater;
 import me.yic.mpoints.utils.PointsConfig;
 import me.yic.mpoints.utils.UpdateConfig;
 import org.bstats.bukkit.Metrics;
@@ -40,7 +41,7 @@ public class MPoints extends JavaPlugin {
 		instance = this;
 		load();
 		if (checkup()) {
-			//new Updater().runTaskAsynchronously(this);
+			new Updater().runTaskAsynchronously(this);
 		}
 		// 检查更新
 		messageManager = new MessagesManager(this);
@@ -123,7 +124,7 @@ public class MPoints extends JavaPlugin {
 
 		refresherTask.cancel();
 		SQL.close();
-		logger("XConomy已成功卸载");
+		logger("MPoints已成功卸载");
 	}
 
 	public static MPoints getInstance() {
