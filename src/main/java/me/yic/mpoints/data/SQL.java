@@ -202,7 +202,11 @@ public class SQL {
 				Cache.refreshFromCache(u,sign);
 				Cache.cachecorrection(u,sign,amount,isAdd);
 				x.addcachecorrection();
-				query = " set balance = balance + " + amount + " where UID = ?";
+			    if (isAdd) {
+					query = " set balance = balance + " + amount + " where UID = ?";
+				}else{
+					query = " set balance = balance - " + amount + " where UID = ?";
+				}
 				PreparedStatement statement2 = connection.prepareStatement("update mpoints_" + suffix + sign + query);
 				statement2.setString(1, u.toString());
 				statement2.executeUpdate();
