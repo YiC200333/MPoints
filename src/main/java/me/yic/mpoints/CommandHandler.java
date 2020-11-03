@@ -263,6 +263,8 @@ public class CommandHandler {
 
                         String com = commandp + " " + commandName + " " + args[0 + commandindex] + " " + args[1 + commandindex] + " " + reason;
 
+                        Boolean hidecommandmessage = PointsCache.getPointFromCache(sign).gethidemessage();
+
                         switch (commandName) {
                             case "give": {
                                 if (!(sender.isOp() | sender.hasPermission("mpoints.admin.give"))) {
@@ -286,23 +288,22 @@ public class CommandHandler {
                                         .replace("%player%", args[0 + commandindex])
                                         .replace("%amount%", amountFormatted));
 
-                                if (checkMessage("money_give_receive") | args.length - commandindex == 3) {
+                                if ((checkMessage("money_give_receive") & !hidecommandmessage) | args.length - commandindex == 3) {
 
-                                    String message = sendprefix() + sendMessage(sign, "money_give_receive")
-                                            .replace("%player%", args[0 + commandindex])
-                                            .replace("%amount%", amountFormatted);
+                                        String message = sendprefix() + sendMessage(sign, "money_give_receive")
+                                                .replace("%player%", args[0 + commandindex])
+                                                .replace("%amount%", amountFormatted);
 
-                                    if (args.length - commandindex == 3) {
-                                        message = sendprefix() + reason;
-                                    }
+                                        if (args.length - commandindex == 3) {
+                                            message = sendprefix() + reason;
+                                        }
 
-                                    if (target == null) {
-                                        broadcastSendMessage(false, sign, args[0 + commandindex], message);
-                                        return true;
-                                    }
+                                        if (target == null) {
+                                            broadcastSendMessage(false, sign, args[0 + commandindex], message);
+                                            return true;
+                                        }
 
-                                    target.sendMessage(message);
-
+                                        target.sendMessage(message);
                                 }
                                 break;
                             }
@@ -332,7 +333,7 @@ public class CommandHandler {
                                         .replace("%player%", args[0 + commandindex])
                                         .replace("%amount%", amountFormatted));
 
-                                if (checkMessage("money_give_receive") | args.length - commandindex == 3) {
+                                if ((checkMessage("money_give_receive") & !hidecommandmessage) | args.length - commandindex == 3) {
                                     String mess = sendprefix() + sendMessage(sign, "money_take_receive")
                                             .replace("%player%", args[0 + commandindex]).replace("%amount%", amountFormatted);
 
@@ -362,7 +363,7 @@ public class CommandHandler {
                                         .replace("%player%", args[0 + commandindex])
                                         .replace("%amount%", amountFormatted));
 
-                                if (checkMessage("money_give_receive") | args.length - commandindex == 3) {
+                                if ((checkMessage("money_give_receive") & !hidecommandmessage) | args.length - commandindex == 3) {
                                     String mess = sendprefix() + sendMessage(sign, "money_set_receive")
                                             .replace("%player%", args[0 + commandindex])
                                             .replace("%amount%", amountFormatted);
@@ -526,11 +527,6 @@ public class CommandHandler {
             return ChatColor.translateAlternateColorCodes('&', MessagesManager.messageFile.getString(message)).
                     replace("%pointname%", PointsCache.getPointFromCache(sign).getpluralname());
         }
-    }
-
-    public static void showVersion(CommandSender sender) {
-        sender.sendMessage(sendMessage(null, "prefix") + "§6 MPoints §f(Version: "
-                + MPoints.getInstance().getDescription().getVersion() + ") §6|§7 Author: §f" + Messages.getAuthor());
     }
 
     private static void sendHelpMessage(CommandSender sender) {

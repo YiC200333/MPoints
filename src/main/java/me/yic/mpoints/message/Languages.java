@@ -16,7 +16,9 @@ public class Languages {
 			english();
 		} else if (lang.equalsIgnoreCase("ChineseTW")) {
 			chinesetw();
-		} else {
+		} else if (lang.equalsIgnoreCase("Spanish")) {
+			spanish();
+		}  else {
 			chinese();
 		}
 
@@ -107,11 +109,11 @@ public class Languages {
 		mess.put("noaccount", "&cTarget account does not exist");
 		mess.put("invalid", "&cInvalid amount");
 		mess.put("over_maxnumber", "&cThe target account amount over the maximum amount");
-		mess.put("money_give", "&cYou give %player% %amount% %pointname%");
-		mess.put("money_give_receive", "&aAdministrator give you %amount% %pointname%");
-		mess.put("money_take", "&cYou take %amount% %pointname% from %player%");
+		mess.put("money_give", "&cYou give %player% %amount%");
+		mess.put("money_give_receive", "&aAdministrator give you %amount%");
+		mess.put("money_take", "&cYou take %amount% from %player%");
 		mess.put("money_take_fail", "&c%player%'s %pointname% is less than %amount%");
-		mess.put("money_take_receive", "&cAdministrator take %amount% %pointname% from your account");
+		mess.put("money_take_receive", "&cAdministrator take %amount% from your account");
 		mess.put("money_set", "&cYou set %player%'s %pointname% to %amount%");
 		mess.put("money_set_receive", "&cAdministrator set your %pointname% to %amount%");
 		mess.put("no_permission", "&cYou don't have permission to use this command");
@@ -129,6 +131,50 @@ public class Languages {
 		mess.put("help11", "&6mpoints <pointname> take * <all/online> <amount> <reason>  -  take <amount> point from <all/online player>");
 		mess.put("help12", "&6mpoints <pointname> balancetop hide/display <player>  -  Hide or display a <player>'s data from TOP10");
 		mess.put("help13", "&6mpoints reload -  Reload message.yml");
+	}
+
+	private static void spanish() {
+		mess.put("prefix", "&6[MPoints]");
+		mess.put("balance", "&aTu balance en %pointname% es de: %balance%");
+		mess.put("balance_other", "&aEl balance de %player% en %pointname% es de: %balance%");
+		mess.put("points_list", "&a%sign% -- %pointname%");
+		mess.put("points_nosign", "&cThis sign doesn''t exist");
+		mess.put("top_title", "&e========= %pointname% TOP10 =========");
+		mess.put("sum_text", "&fTotal de dinero en el server - %balance%");
+		mess.put("top_text", "&e%index%: %player% - %balance%");
+		mess.put("top_subtitle", "&7El TOP10 se actualiza cada 5 minutos");
+		mess.put("top_nodata", "&cNo hay datos aun para un TOP10");
+		mess.put("top_hidden", "&aEl jugador %player% esconde su cantidad de %pointname%");
+		mess.put("top_displayed", "&aEl jugador %player% ahora muestra su cantidad de %pointname%");
+		mess.put("pay", "&cTransferiste a %player% %amount% %pointname%");
+		mess.put("pay_receive", "&aRecibiste %amount% %pointname% de %player%");
+		mess.put("pay_fail", "&cTus %pointname% no alcanzan para %amount%");
+		mess.put("pay_self", "&cNo puedes transferir esta moneda a ti mismo");
+		mess.put("noaccount", "&cLa cuenta escrita no existe");
+		mess.put("invalid", "&cCantidad Invalida");
+		mess.put("over_maxnumber", "&cLa cantidad de %pointname% de la cuenta escrita sobrepasa la cantidad limite");
+		mess.put("money_give", "&cLe diste a %player% %amount%");
+		mess.put("money_give_receive", "&aEl Administrador te dio %amount%");
+		mess.put("money_take", "&cTu tomaste %amount% %pointname% de %player%");
+		mess.put("money_take_fail", "&cLa cantiidad de %pointname% de %player% es menor que %amount%");
+		mess.put("money_take_receive", "&cEl Administrador tomo %amount% %pointname% de tu cuenta");
+		mess.put("money_set", "&cEstableciste la cantidad de %pointname% de %player% en  %amount%");
+		mess.put("money_set_receive", "&cEl Administrador establecio tu cantidad de %pointname% en %amount%");
+		mess.put("no_permission", "&cNo tienes permiso para usar este comando");
+		mess.put("help_title_full", "&6=============== [MPoints] HELP ===============");
+		mess.put("help1", "&6mpoints <moneda> balance  -  Muestra tu balance en esta moneda");
+		mess.put("help2", "&6mpoints <moneda> balance <jugador>  -  Muestra el balance del <jugador> enesta moneda");
+		mess.put("help3", "&6mpoints <moneda> pay <jugador> <cantidad>  -  Transfiere al jugador cierta cantidad de esta moneda");
+		mess.put("help4", "&6mpoints <moneda> balancetop  -  Muestra el TOP10");
+		mess.put("help5", "&6mpoints version  -  Muestra a informacion del Plugin");
+		mess.put("help6", "&6mpoints list  -  Enlista todas las moneda");
+		mess.put("help7", "&6mpoints <moneda> give <jugador> <cantidad>  -  Da al jugador cierta cantidad de esta moneda");
+		mess.put("help8", "&6mpoints <moneda> take <jugador> <cantidad>  -  Toma del jugador cierta cantidad de esta moneda");
+		mess.put("help9", "&6mpoints <moneda> set <jugador> <cantidad>  -  Etablece al jugador cierta cantidad de esta moneda");
+		mess.put("help10", "&6mpoints <moneda> give * <all/online> <cantidad> <razon>  -  Da a todos/jugadores online cierta cantidad de esta moneda");
+		mess.put("help11", "&6mpoints <moneda> take * <all/online> <cantidad> <razon>  -  Toma cierta cantidad de todos/jugadores online");
+		mess.put("help12", "&6mpoints <moneda> balancetop hide/display <jugador>  -  Muestra o esconde los datos del <jugador> del TOP10");
+		mess.put("help13", "&6mpoints reload -  Recarga el archivo message.yml");
 	}
 
 	private static void chinese() {
@@ -151,11 +197,11 @@ public class Languages {
 		mess.put("noaccount", "&c目标帐号不存在");
 		mess.put("invalid", "&c输入的金额无效");
 		mess.put("over_maxnumber", "&c目标帐号金额超出最大值");
-		mess.put("money_give", "&c你给予了 %player% %amount% %pointname%");
-		mess.put("money_give_receive", "&a管理员给予你 %amount% %pointname%");
-		mess.put("money_take", "&c你从  %player% 收取了 %amount% %pointname%");
+		mess.put("money_give", "&c你给予了 %player% %amount%");
+		mess.put("money_give_receive", "&a管理员给予你 %amount%");
+		mess.put("money_take", "&c你从  %player% 收取了 %amount%");
 		mess.put("money_take_fail", "&c%player% 的 %pointname% 不足  %amount%");
-		mess.put("money_take_receive", "&c管理员扣除了  %amount% %pointname%");
+		mess.put("money_take_receive", "&c管理员扣除了  %amount%");
 		mess.put("money_set", "&c你将  %player% 的 %pointname% 设置为 %amount%");
 		mess.put("money_set_receive", "&c管理员设置你的 %pointname% 为  %amount%");
 		mess.put("no_permission", "&c你没有权限使用这个指令");
@@ -195,11 +241,11 @@ public class Languages {
 		mess.put("noaccount", "&c目標帳號不存在");
 		mess.put("invalid", "&c輸入的金額無效");
 		mess.put("over_maxnumber", "&c目標賬號金額超出最大值");
-		mess.put("money_give", "&c你給予了 %player% %amount% %pointname%");
-		mess.put("money_give_receive", "&a管理員給予你 %amount% %pointname%");
-		mess.put("money_take", "&c你從 %player% 收取了 %amount% %pointname%");
+		mess.put("money_give", "&c你給予了 %player% %amount%");
+		mess.put("money_give_receive", "&a管理員給予你 %amount%");
+		mess.put("money_take", "&c你從 %player% 收取了 %amount%");
 		mess.put("money_take_fail", "&c%player% 的 %pointname% 不足 %amount%");
-		mess.put("money_take_receive", "&c管理員扣除了 %amount% %pointname%");
+		mess.put("money_take_receive", "&c管理員扣除了 %amount%");
 		mess.put("money_set", "&c你將 %player% 的 %pointname% 設定為 %amount%");
 		mess.put("money_set_receive", "&c管理員設定你的 %pointname% 為 %amount%");
 		mess.put("no_permission", "&c你沒有許可權使用這個指令");
@@ -234,7 +280,7 @@ public class Languages {
 		if (lang.equalsIgnoreCase("French")) {
 			translateFile("#============================== Translator - none ==============================", file);
 		} else if (lang.equalsIgnoreCase("Spanish")) {
-			translateFile("#============================== Translator - none ==============================", file);
+			translateFile("#============================== Translator - SYukishiro ==============================", file);
 		} else if (lang.equalsIgnoreCase("Russian")) {
 			translateFile("#============================== Translator - none ==============================", file);
 		} else if (lang.equalsIgnoreCase("Turkish")) {

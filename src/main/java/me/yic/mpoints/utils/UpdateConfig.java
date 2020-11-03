@@ -17,4 +17,16 @@ public class UpdateConfig {
 		//}
 		return update;
 	}
+
+
+	public static boolean updatepoint(String u, FileConfiguration config, File cc) {
+		boolean update = false;
+		FileConfiguration ck = YamlConfiguration.loadConfiguration(cc);
+		if (!ck.contains(u + ".setting.hide-comannd-message")) {
+			config.createSection(u + ".setting.hide-comannd-message");
+			config.set(u + ".setting.hide-comannd-message", false);
+			update = true;
+		}
+		return update;
+	}
 }

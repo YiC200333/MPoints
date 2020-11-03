@@ -9,6 +9,8 @@ demo1:
     enable-baltop: true
     #Are players allowed to use the pay command
     allow-pay-command: true
+    #Whether to hide messages from OP commands
+    hide-comannd-message: false
     #Whether to enable BungeeCord synchronization
     enable-bungeecord: false
   display:
@@ -34,6 +36,7 @@ demo2:
     initial-bal: 0.0
     enable-baltop: true
     allow-pay-command: true
+    hide-comannd-message: false
     enable-bungeecord: false
   display:
     singular-name: dollar

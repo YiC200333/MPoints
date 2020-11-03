@@ -13,6 +13,7 @@ public class Points {
 	private final BigDecimal initialbal;
 	private final Boolean enablebaltop;
 	private final Boolean allowpay;
+	private final Boolean hidemessage;
 	private final Boolean enablebc;
 	private final String singularname;
 	private final String pluralname;
@@ -21,13 +22,14 @@ public class Points {
 	private final String displayformat;
 	private final BigDecimal maxnumber;
 
-	public Points(String sign,String initialbal,Boolean enablebaltop,Boolean allowpay,Boolean enablebc,
+	public Points(String sign,String initialbal,Boolean enablebaltop,Boolean allowpay,Boolean hidemessage,Boolean enablebc,
 				  String singularname,String pluralname,
 				  Boolean integerbal,String separator,String displayformat,String maxnumber) {
 		this.sign = sign;
 		this.initialbal = formatString(integerbal,initialbal);
 		this.enablebaltop = enablebaltop;
 		this.allowpay = allowpay;
+		this.hidemessage = hidemessage;
 		this.enablebc = enablebc;
 		this.singularname = singularname;
 		this.pluralname = pluralname;
@@ -60,6 +62,10 @@ public class Points {
 
 	public Boolean getallowpay() {
 		return allowpay;
+	}
+
+	public Boolean gethidemessage() {
+		return hidemessage;
 	}
 
 	public Boolean getenablebc() {

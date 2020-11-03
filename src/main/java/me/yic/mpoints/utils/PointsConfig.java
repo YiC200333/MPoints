@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class PointsConfig {
@@ -27,18 +28,25 @@ public class PointsConfig {
 			MPoints.getInstance().saveResource("points.yml", false);
 		}
 		PointsFile = YamlConfiguration.loadConfiguration(file);
-		return getPointstoCache();
+		return getPointstoCache(file);
 	}
 
-	private boolean getPointstoCache() {
+	private boolean getPointstoCache(File path) {
 		PointsCache.pointsigns.clear();
 		PointsCache.points.clear();
+		Boolean update = false;
 		ConfigurationSection section = PointsFile.getConfigurationSection("");
 		for (String u : section.getKeys(false)) {
+			if (update) {
+				UpdateConfig.updatepoint(u,PointsFile,path);
+			}else{
+				update = UpdateConfig.updatepoint(u,PointsFile,path);
+			}
 			String sign = section.getString(u + ".setting.sign");
 			String initialbal = section.getString(u + ".setting.initial-bal");
 			Boolean enablebaltop = section.getBoolean(u + ".setting.enable-baltop");
 			Boolean allowpay = section.getBoolean(u + ".setting.allow-pay-command");
+			Boolean hidemessage = section.getBoolean(u + ".setting.hide-comannd-message");
 			Boolean enablebc = section.getBoolean(u + ".setting.enable-bungeecord");
 			if (enablebc){
 				MPoints.hasbcpoint = true;
@@ -58,10 +66,18 @@ public class PointsConfig {
 				return false;
 			}
 			PointsCache.pointsigns.add(sign);
-			Points x = new Points(sign,initialbal,enablebaltop,allowpay,enablebc,
+			Points x = new Points(sign,initialbal,enablebaltop,allowpay,hidemessage,enablebc,
 					singularname,pluralname,integerbal,separator,displayformat,maxnumber);
 			PointsCache.insertIntoCache(sign,x);
 		}
+		if (update) {
+			try {
+				PointsFile.save(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return true;
 	}
+
 }
