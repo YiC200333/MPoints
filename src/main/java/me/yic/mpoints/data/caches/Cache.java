@@ -4,7 +4,7 @@ import me.yic.mpoints.MPoints;
 import me.yic.mpoints.data.DataCon;
 import me.yic.mpoints.task.SendMessTaskS;
 import me.yic.mpoints.utils.PlayerPoints;
-import me.yic.mpoints.utils.RecordData;
+import me.yic.mpoints.utils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -35,14 +35,14 @@ public class Cache {
         }
     }
 
+    public static void insertIntoUUIDCache(final String u, UUID v) {
+        uidcache.put(u, v);
+    }
+
     public static void refreshFromCache(final UUID uuid,String sign) {
         if (uuid != null) {
             DataCon.getBal(uuid,sign);
         }
-    }
-
-    public static void cacheUUID(final String u, UUID v) {
-        uidcache.put(u, v);
     }
 
     public static void clearCache() {
@@ -103,7 +103,7 @@ public class Cache {
     }
 
 
-    public static void change(UUID u, String sign, BigDecimal amount, Boolean isAdd, String type, String playername, String reason) {
+    public static void change(UUID u, String playername, String sign, BigDecimal amount, Boolean isAdd, String type, String reason) {
         BigDecimal newvalue = amount;
         BigDecimal bal = getBalanceFromCacheOrDB(u,sign);
         if (isAdd != null) {
@@ -114,24 +114,18 @@ public class Cache {
             }
         }
         insertIntoCache(u, sign, newvalue);
-        RecordData x = null;
-        if (MPoints.config.getBoolean("Settings.mysql") && MPoints.config.getBoolean("Settings.transaction-record")) {
-            x = new RecordData(type, u, playername, sign, newvalue, amount, isAdd, reason);
-        }
+        PlayerData pd = new PlayerData(type, u, playername, sign, bal, amount, newvalue, isAdd, reason);
         if (MPoints.isBungeecord() && PointsCache.getPointFromCache(sign).getenablebc()) {
-            sendmessave(u, sign, bal, newvalue, amount, isAdd, x);
+            sendmessave(u, sign, isAdd, pd);
         } else {
-            DataCon.save(u, sign, bal, amount, isAdd, x);
+            DataCon.save(u, sign, isAdd, pd);
         }
     }
 
     public static void changeall(String sign, String targettype, BigDecimal amount, Boolean isAdd, String type, String reason) {
-        RecordData x = null;
         playerdata.clear();
-        if (MPoints.config.getBoolean("Settings.mysql") && MPoints.config.getBoolean("Settings.transaction-record")) {
-            x = new RecordData(type, null, null, sign, BigDecimal.ZERO, amount, isAdd, reason);
-        }
-        DataCon.saveall(sign, targettype, amount, isAdd, x);
+        PlayerData pd = new PlayerData(type, null, null, sign, null, amount, BigDecimal.ZERO, isAdd, reason);
+        DataCon.saveall(sign, targettype, amount, isAdd, pd);
         if (MPoints.isBungeecord() && PointsCache.getPointFromCache(sign).getenablebc()) {
             sendmessaveall(sign, targettype, amount, isAdd);
         }
@@ -148,13 +142,16 @@ public class Cache {
         return sumbalance.get(sign);
     }
 
-    public static UUID translateUUID(String name) {
+    public static Player getplayer(String name) {
+        return Bukkit.getPlayer(translateUUID(name, null));
+    }
+
+    public static UUID translateUUID(String name, Player pp) {
         if (uidcache.containsKey(name)) {
             return uidcache.get(name);
         } else {
-            Player pp = Bukkit.getPlayerExact(name);
             if (pp != null) {
-                uidcache.put(name, pp.getUniqueId());
+                insertIntoUUIDCache(name, pp.getUniqueId());
                 return uidcache.get(name);
             } else {
                 DataCon.getUid(name);
@@ -166,7 +163,7 @@ public class Cache {
         return null;
     }
 
-    private static void sendmessave(UUID u, String sign, BigDecimal balance, BigDecimal amount, BigDecimal amountc, Boolean isAdd, RecordData x) {
+    private static void sendmessave(UUID u, String sign, Boolean isAdd, PlayerData pd) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         DataOutputStream output = new DataOutputStream(stream);
         try {
@@ -174,15 +171,15 @@ public class Cache {
             output.writeUTF(MPoints.getSign());
             output.writeUTF(sign);
             output.writeUTF(u.toString());
-            output.writeUTF(amount.toString());
+            output.writeUTF(pd.getnewbalance().toString());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        new SendMessTaskS(stream, u, sign, balance, amountc, isAdd, x).runTaskAsynchronously(MPoints.getInstance());
+        new SendMessTaskS(stream, u, sign, isAdd, pd).runTaskAsynchronously(MPoints.getInstance());
     }
 
-    private static void sendmessaveall(String sign, String targettype, BigDecimal amountc, Boolean isAdd) {
+    private static void sendmessaveall(String sign, String targettype, BigDecimal amount, Boolean isAdd) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         DataOutputStream output = new DataOutputStream(stream);
         try {
@@ -194,7 +191,7 @@ public class Cache {
             }else if (targettype.equals("online")) {
                 output.writeUTF("online");
             }
-            output.writeUTF(amountc.toString());
+            output.writeUTF(amount.toString());
             if (isAdd) {
                 output.writeUTF("add");
             } else {
@@ -204,7 +201,7 @@ public class Cache {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        new SendMessTaskS(stream, null, sign, null, amountc, isAdd, null).runTaskAsynchronously(MPoints.getInstance());
+        new SendMessTaskS(stream, null, sign, isAdd, null).runTaskAsynchronously(MPoints.getInstance());
     }
 
 }

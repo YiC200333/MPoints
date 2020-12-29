@@ -2,7 +2,7 @@ package me.yic.mpoints.data;
 
 import me.yic.mpoints.MPoints;
 import me.yic.mpoints.utils.DatabaseConnection;
-import me.yic.mpoints.utils.RecordData;
+import me.yic.mpoints.utils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -69,11 +69,11 @@ public class DataCon extends MPoints {
 		SQL.hidetop(u,sign,type);
 	}
 
-	public static void save(UUID UID, String sign, BigDecimal balance, BigDecimal amount, Boolean isAdd, RecordData x) {
-		SQL.save(UID, sign, balance, amount, isAdd, x);
+	public static void save(UUID UID, String sign, Boolean isAdd, PlayerData pd) {
+		SQL.save(UID, sign, isAdd, pd);
 	}
 
-	public static void saveall(String sign, String targettype, BigDecimal amount, Boolean isAdd, RecordData x) {
+	public static void saveall(String sign, String targettype, BigDecimal amount, Boolean isAdd, PlayerData x) {
 		new BukkitRunnable() {
 			@Override
 			public void run() {

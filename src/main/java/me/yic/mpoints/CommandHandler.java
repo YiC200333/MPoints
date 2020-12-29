@@ -16,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -65,11 +66,11 @@ public class CommandHandler {
                     if (args[0 + commandindex].equalsIgnoreCase("hide") || args[0 + commandindex].equalsIgnoreCase("display")) {
 
                         if (!(sender.isOp() || sender.hasPermission("mpoints.admin.balancetop"))) {
-                            sendHelpMessage(sender);
+                            sendHelpMessage(sender, 1);
                             return true;
                         }
 
-                        UUID targetUUID = Cache.translateUUID(args[1 + commandindex]);
+                        UUID targetUUID = Cache.translateUUID(args[1 + commandindex],null);
 
                         if (targetUUID == null) {
                             sender.sendMessage(sendprefix() + sendMessage(null, "noaccount"));
@@ -101,7 +102,7 @@ public class CommandHandler {
                 }
 
                 if (args.length - commandindex != 2) {
-                    sendHelpMessage(sender);
+                    sendHelpMessage(sender, 1);
                     return true;
                 }
 
@@ -131,8 +132,8 @@ public class CommandHandler {
                     return true;
                 }
 
-                Player target = Bukkit.getPlayerExact(args[0 + commandindex]);
-                UUID targetUUID = Cache.translateUUID(args[0 + commandindex]);
+                Player target = Cache.getplayer(args[0 + commandindex]);
+                UUID targetUUID = Cache.translateUUID(args[0 + commandindex],null);
                 if (targetUUID == null) {
                     sender.sendMessage(sendprefix() + sendMessage(null, "noaccount"));
                     return true;
@@ -145,18 +146,18 @@ public class CommandHandler {
                 }
 
                 String com = commandp + " " + commandName + " " + args[0 + commandindex] + " " + args[1 + commandindex];
-                Cache.change(((Player) sender).getUniqueId(), sign, amount, false, "PLAYER_COMMAND", sender.getName(), com);
+                Cache.change(((Player) sender).getUniqueId(), sender.getName(), sign, amount, false, "PLAYER_COMMAND", com);
                 sender.sendMessage(sendprefix() + sendMessage(sign, "pay")
                         .replace("%player%", args[0 + commandindex])
                         .replace("%amount%", amountFormatted));
 
-                Cache.change(targetUUID, sign, amount, true, "PLAYER_COMMAND", args[0 + commandindex], com);
+                Cache.change(targetUUID, args[0 + commandindex], sign, amount, true, "PLAYER_COMMAND", com);
                 String mess = sendprefix() + sendMessage(sign, "pay_receive")
                         .replace("%player%", sender.getName())
                         .replace("%amount%", amountFormatted);
 
                 if (target == null) {
-                    broadcastSendMessage(false, sign, args[0 + commandindex], mess);
+                    broadcastSendMessage(false, sign, targetUUID, mess);
                     return true;
                 }
 
@@ -199,7 +200,7 @@ public class CommandHandler {
                             return true;
                         }
 
-                        UUID targetUUID = Cache.translateUUID(args[0 + commandindex]);
+                        UUID targetUUID = Cache.translateUUID(args[0 + commandindex],null);
                         if (targetUUID == null) {
                             sender.sendMessage(sendprefix() + sendMessage(null, "noaccount"));
                             return true;
@@ -214,7 +215,7 @@ public class CommandHandler {
                     }
 
                     default: {
-                        sendHelpMessage(sender);
+                        sendHelpMessage(sender, 1);
                         break;
                     }
 
@@ -229,7 +230,7 @@ public class CommandHandler {
 
                 if (!(sender.isOp() | sender.hasPermission("mpoints.admin.give")
                         | sender.hasPermission("mpoints.admin.take") | sender.hasPermission("mpoints.admin.set"))) {
-                    sendHelpMessage(sender);
+                    sendHelpMessage(sender, 1);
                     return true;
                 }
 
@@ -249,8 +250,8 @@ public class CommandHandler {
 
                         BigDecimal amount = DataFormat.formatString(sign, args[1 + commandindex]);
                         String amountFormatted = DataFormat.shown(sign, amount);
-                        Player target = Bukkit.getPlayerExact(args[0 + commandindex]);
-                        UUID targetUUID = Cache.translateUUID(args[0 + commandindex]);
+                        Player target = Cache.getplayer(args[0 + commandindex]);
+                        UUID targetUUID = Cache.translateUUID(args[0 + commandindex],null);
                         String reason = "";
                         if (args.length - commandindex == 3) {
                             reason = args[2 + commandindex];
@@ -268,7 +269,7 @@ public class CommandHandler {
                         switch (commandName) {
                             case "give": {
                                 if (!(sender.isOp() | sender.hasPermission("mpoints.admin.give"))) {
-                                    sendHelpMessage(sender);
+                                    sendHelpMessage(sender, 1);
                                     return true;
                                 }
 
@@ -283,7 +284,7 @@ public class CommandHandler {
                                     return true;
                                 }
 
-                                Cache.change(targetUUID, sign, amount, true, "ADMIN_COMMAND", args[0 + commandindex], com);
+                                Cache.change(targetUUID, args[0 + commandindex], sign, amount, true, "ADMIN_COMMAND", com);
                                 sender.sendMessage(sendprefix() + sendMessage(sign, "money_give")
                                         .replace("%player%", args[0 + commandindex])
                                         .replace("%amount%", amountFormatted));
@@ -299,7 +300,7 @@ public class CommandHandler {
                                         }
 
                                         if (target == null) {
-                                            broadcastSendMessage(false, sign, args[0 + commandindex], message);
+                                            broadcastSendMessage(false, sign, targetUUID, message);
                                             return true;
                                         }
 
@@ -310,7 +311,7 @@ public class CommandHandler {
 
                             case "take": {
                                 if (!(sender.isOp() | sender.hasPermission("mpoints.admin.take"))) {
-                                    sendHelpMessage(sender);
+                                    sendHelpMessage(sender, 1);
                                     return true;
                                 }
 
@@ -328,7 +329,7 @@ public class CommandHandler {
                                     return true;
                                 }
 
-                                Cache.change(targetUUID, sign, amount, false, "ADMIN_COMMAND", args[0 + commandindex], com);
+                                Cache.change(targetUUID, args[0 + commandindex], sign, amount, false, "ADMIN_COMMAND", com);
                                 sender.sendMessage(sendprefix() + sendMessage(sign, "money_take")
                                         .replace("%player%", args[0 + commandindex])
                                         .replace("%amount%", amountFormatted));
@@ -342,7 +343,7 @@ public class CommandHandler {
                                     }
 
                                     if (target == null) {
-                                        broadcastSendMessage(false, sign, args[0 + commandindex], mess);
+                                        broadcastSendMessage(false, sign, targetUUID, mess);
                                         return true;
                                     }
 
@@ -354,11 +355,11 @@ public class CommandHandler {
 
                             case "set": {
                                 if (!(sender.isOp() | sender.hasPermission("mpoints.admin.set"))) {
-                                    sendHelpMessage(sender);
+                                    sendHelpMessage(sender, 1);
                                     return true;
                                 }
 
-                                Cache.change(targetUUID, sign, amount, null, "ADMIN_COMMAND", args[0 + commandindex], com);
+                                Cache.change(targetUUID, args[0 + commandindex], sign, amount, null, "ADMIN_COMMAND", com);
                                 sender.sendMessage(sendprefix() + sendMessage(sign, "money_set")
                                         .replace("%player%", args[0 + commandindex])
                                         .replace("%amount%", amountFormatted));
@@ -373,7 +374,7 @@ public class CommandHandler {
                                     }
 
                                     if (target == null) {
-                                        broadcastSendMessage(false, sign, args[0 + commandindex], mess);
+                                        broadcastSendMessage(false, sign, targetUUID, mess);
                                         return true;
                                     }
 
@@ -385,7 +386,7 @@ public class CommandHandler {
 
 
                             default: {
-                                sendHelpMessage(sender);
+                                sendHelpMessage(sender, 1);
                                 break;
                             }
 
@@ -396,12 +397,12 @@ public class CommandHandler {
                     case 4: {
 
                         if (!args[0 + commandindex].equals("*")) {
-                            sendHelpMessage(sender);
+                            sendHelpMessage(sender, 1);
                             return true;
                         }
 
                         if (!(args[1 + commandindex].equalsIgnoreCase("all") | args[1 + commandindex].equalsIgnoreCase("online"))) {
-                            sendHelpMessage(sender);
+                            sendHelpMessage(sender, 1);
                             return true;
                         }
 
@@ -429,7 +430,7 @@ public class CommandHandler {
                         switch (commandName) {
                             case "give": {
                                 if (!(sender.isOp() | sender.hasPermission("mpoints.admin.give"))) {
-                                    sendHelpMessage(sender);
+                                    sendHelpMessage(sender, 1);
                                     return true;
                                 }
 
@@ -446,7 +447,7 @@ public class CommandHandler {
 
                             case "take": {
                                 if (!(sender.isOp() | sender.hasPermission("mpoints.admin.take"))) {
-                                    sendHelpMessage(sender);
+                                    sendHelpMessage(sender, 1);
                                     return true;
                                 }
 
@@ -463,7 +464,7 @@ public class CommandHandler {
                             }
 
                             default: {
-                                sendHelpMessage(sender);
+                                sendHelpMessage(sender, 1);
                                 break;
                             }
 
@@ -473,7 +474,7 @@ public class CommandHandler {
                     }
 
                     default: {
-                        sendHelpMessage(sender);
+                        sendHelpMessage(sender, 1);
                         break;
                     }
 
@@ -481,7 +482,7 @@ public class CommandHandler {
                 break;
             }
             default: {
-                sendHelpMessage(sender);
+                sendHelpMessage(sender, 1);
                 break;
             }
 
@@ -529,36 +530,50 @@ public class CommandHandler {
         }
     }
 
-    private static void sendHelpMessage(CommandSender sender) {
-        sender.sendMessage(sendMessage(null, "help_title_full"));
-        sender.sendMessage(sendMessage(null, "help1"));
-        sender.sendMessage(sendMessage(null, "help2"));
-        sender.sendMessage(sendMessage(null, "help3"));
-        sender.sendMessage(sendMessage(null, "help4"));
-        sender.sendMessage(sendMessage(null, "help5"));
+    private static void sendHelpMessage(CommandSender sender, Integer num) {
+        List<String> helplist = new ArrayList<>();
+        helplist.add(sendMessage(null, "help1"));
+        helplist.add(sendMessage(null, "help2"));
+        helplist.add(sendMessage(null, "help3"));
+        helplist.add(sendMessage(null, "help4"));
+        helplist.add(sendMessage(null, "help5"));
         if (sender.isOp() | sender.hasPermission("mpoints.admin.list")) {
-            sender.sendMessage(sendMessage(null, "help6"));
+            helplist.add(sendMessage(null, "help6"));
         }
         if (sender.isOp() | sender.hasPermission("mpoints.admin.give")) {
-            sender.sendMessage(sendMessage(null, "help7"));
-            sender.sendMessage(sendMessage(null, "help10"));
+            helplist.add(sendMessage(null, "help7"));
+            helplist.add(sendMessage(null, "help10"));
         }
         if (sender.isOp() | sender.hasPermission("mpoints.admin.take")) {
-            sender.sendMessage(sendMessage(null, "help8"));
-            sender.sendMessage(sendMessage(null, "help11"));
+            helplist.add(sendMessage(null, "help8"));
+            helplist.add(sendMessage(null, "help11"));
         }
         if (sender.isOp() | sender.hasPermission("mpoints.admin.set")) {
-            sender.sendMessage(sendMessage(null, "help9"));
+            helplist.add(sendMessage(null, "help9"));
         }
         if (sender.isOp() | sender.hasPermission("mpoints.admin.balancetop")) {
-            sender.sendMessage(sendMessage(null, "help12"));
+            helplist.add(sendMessage(null, "help12"));
         }
         if (sender.isOp()) {
-            sender.sendMessage(sendMessage(null, "help13"));
+            helplist.add(sendMessage(null, "help13"));
+        }
+        Integer maxipages = 0;
+        if (helplist.size() % 5 == 0){
+            maxipages = helplist.size() / 5;
+        }else{
+            maxipages = helplist.size() / 5 + 1;
+        }
+        sender.sendMessage(sendMessage(null, "help_title_full").replace("%page%", num.toString() + "/" + maxipages.toString()));
+        Integer indexpage = 0;
+        while (indexpage < 5) {
+            if (helplist.size() > indexpage + (num - 1) * 5) {
+                sender.sendMessage(helplist.get(indexpage + (num - 1) * 5));
+            }
+            indexpage += 1;
         }
     }
 
-    private static void broadcastSendMessage(boolean ispublic, String sign, String s, String s1) {
+    private static void broadcastSendMessage(boolean ispublic, String sign, UUID u, String s1) {
         if (!MPoints.isBungeecord() || !PointsCache.getPointFromCache(sign).getenablebc()) {
             return;
         }
@@ -570,7 +585,7 @@ public class CommandHandler {
                 output.writeUTF("message");
                 output.writeUTF(MPoints.getSign());
                 output.writeUTF(sign);
-                output.writeUTF(s);
+                output.writeUTF(u.toString());
                 output.writeUTF(s1);
             } else {
                 output.writeUTF("broadcast");
@@ -582,7 +597,7 @@ public class CommandHandler {
             e.printStackTrace();
         }
 
-        new SendMessTaskS(stream, null, sign, null, null, null, null).runTaskAsynchronously(MPoints.getInstance());
+        new SendMessTaskS(stream, null, sign, null, null).runTaskAsynchronously(MPoints.getInstance());
 
     }
 

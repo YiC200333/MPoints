@@ -19,7 +19,7 @@ public class MPointsAPI {
 	}
 
 	public static UUID translateUUID(String playername) {
-		return Cache.translateUUID(playername);
+		return Cache.translateUUID(playername,null);
 	}
 
 	public static BigDecimal formatdouble(String sign, String amount) {
@@ -42,7 +42,7 @@ public class MPointsAPI {
 		if (MPoints.isBungeecord() & Bukkit.getOnlinePlayers().isEmpty()) {
 			return 1;
 		}
-		BigDecimal bal = getbalance(sign, Cache.translateUUID(playername));
+		BigDecimal bal = getbalance(sign, u);
 		if (isadd){
 			if (ismaxnumber(sign, bal.add(amount))){
 				return 3;
@@ -52,7 +52,7 @@ public class MPointsAPI {
 				return 2;
 			}
 		}
-		Cache.change(u ,sign, amount ,isadd ,"PLUGIN_API" , playername, "N/A");
+		Cache.change(u, playername, sign, amount ,isadd ,"PLUGIN_API" , "N/A");
 		return 0;
 	}
 

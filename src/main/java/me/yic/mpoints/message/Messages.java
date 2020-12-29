@@ -537,27 +537,49 @@ public class Messages {
 					newMessage = "アップデート検査が失敗しました";
 				}
 				break;
-			case "§amessage.yml重载成功":
+			case "§cpoints.yml重载错误":
 				if (lang.equalsIgnoreCase("English")) {
-					newMessage = "§amessage.yml reloaded successfully";
+					newMessage = "§cpoints.yml reloaded error";
 				}
 				if (lang.equalsIgnoreCase("French")) {
-					newMessage = "§amessage.yml reloaded successfully";
+					newMessage = "§cpoints.yml reloaded error";
 				}
 				if (lang.equalsIgnoreCase("Spanish")) {
-					newMessage = "§amessage.yml reloaded successfully";
+					newMessage = "§cpoints.yml reloaded error";
 				}
 				if (lang.equalsIgnoreCase("Russian")) {
-					newMessage = "§amessage.yml reloaded successfully";
+					newMessage = "§cpoints.yml reloaded error";
 				}
 				if (lang.equalsIgnoreCase("ChineseTW")) {
-					newMessage = "§amessage.yml重載成功";
+					newMessage = "§amessage.yml 重載错误";
 				}
 				if (lang.equalsIgnoreCase("Turkish")) {
-					newMessage = "§amessage.yml reloaded successfully";
+					newMessage = "§cpoints.yml reloaded error";
 				}
 				if (lang.equalsIgnoreCase("Japanese")) {
-					newMessage = "§amessage.ymlリロード";
+					newMessage = "§cpoints.yml reloaded error";
+				}
+			case "§amessage.yml 和 points.yml 重载成功":
+				if (lang.equalsIgnoreCase("English")) {
+					newMessage = "§amessage.yml and points.yml reloaded successfully";
+				}
+				if (lang.equalsIgnoreCase("French")) {
+					newMessage = "§amessage.yml and points.yml  reloaded successfully";
+				}
+				if (lang.equalsIgnoreCase("Spanish")) {
+					newMessage = "§amessage.yml and points.yml  reloaded successfully";
+				}
+				if (lang.equalsIgnoreCase("Russian")) {
+					newMessage = "§amessage.yml and points.yml  reloaded successfully";
+				}
+				if (lang.equalsIgnoreCase("ChineseTW")) {
+					newMessage = "§amessage.yml 和 points.yml 重載成功";
+				}
+				if (lang.equalsIgnoreCase("Turkish")) {
+					newMessage = "§amessage.yml and points.yml  reloaded successfully";
+				}
+				if (lang.equalsIgnoreCase("Japanese")) {
+					newMessage = "§amessage.yml and points.yml リロード";
 				}
 				// -----------------------------------------------------------------------------------------
 				break;

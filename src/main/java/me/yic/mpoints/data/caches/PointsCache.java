@@ -24,4 +24,8 @@ public class PointsCache {
         return null;
     }
 
+    public static void CleanCache() {
+        points.clear();
+        pointsigns.clear();
+    }
 }

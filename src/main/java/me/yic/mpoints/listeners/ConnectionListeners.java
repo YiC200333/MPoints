@@ -30,6 +30,7 @@ public class ConnectionListeners implements Listener {
 				DataCon.newPlayer(a);
 			}
 		}.runTaskAsynchronously(MPoints.getInstance());
+		Cache.translateUUID(a.getName(), a);
 
 		if (a.isOp()) {
 			notifyUpdate(a);

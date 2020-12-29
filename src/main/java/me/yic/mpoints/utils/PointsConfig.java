@@ -2,16 +2,13 @@ package me.yic.mpoints.utils;
 
 import me.yic.mpoints.MPoints;
 import me.yic.mpoints.data.caches.PointsCache;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 public class PointsConfig {
 

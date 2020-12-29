@@ -22,7 +22,6 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.HashMap;
 
 public class MPoints extends JavaPlugin {
 
@@ -133,6 +132,10 @@ public class MPoints extends JavaPlugin {
 
 	public void reloadMessages() {
 		messageManager.load();
+	}
+
+	public boolean reloadPoints() {
+		return pointsconfig.load();
 	}
 
 	public static boolean allowHikariConnectionPooling() {

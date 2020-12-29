@@ -1,7 +1,5 @@
 package me.yic.mpoints.utils;
 
-import me.yic.mpoints.data.DataFormat;
-
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.UUID;

@@ -5,7 +5,7 @@ import me.yic.mpoints.data.caches.Cache;
 import me.yic.mpoints.data.caches.PointsCache;
 import me.yic.mpoints.message.Messages;
 import me.yic.mpoints.utils.DatabaseConnection;
-import me.yic.mpoints.utils.RecordData;
+import me.yic.mpoints.utils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -178,8 +178,9 @@ public class SQL {
 		}
 	}
 
-	public static void save(UUID u, String sign, BigDecimal balance, BigDecimal amount, Boolean isAdd, RecordData x) {
+	public static void save(UUID u, String sign, Boolean isAdd, PlayerData pd) {
 		Connection connection = database.getConnectionAndCheck();
+		BigDecimal amount = pd.getamount();
 		try {
 			String query;
 			if (isAdd == null) {
@@ -192,7 +193,7 @@ public class SQL {
 			Boolean requirefresh = false;
 			if (MPoints.config.getBoolean("Settings.cache-correction")&&isAdd!=null){
 				requirefresh = true;
-				query = query + "AND balance = " + balance;
+				query = query + "AND balance = " + pd.getbalance().toString();
 			}
 			PreparedStatement statement1 = connection.prepareStatement("update mpoints_" + suffix + sign + query);
 			statement1.setString(1, u.toString());
@@ -201,7 +202,7 @@ public class SQL {
 			if (requirefresh && rs == 0){
 				Cache.refreshFromCache(u,sign);
 				Cache.cachecorrection(u,sign,amount,isAdd);
-				x.addcachecorrection();
+				pd.addcachecorrection();
 			    if (isAdd) {
 					query = " set balance = balance + " + amount + " where UID = ?";
 				}else{
@@ -215,11 +216,11 @@ public class SQL {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		record(x,connection);
+		record(pd,connection);
 		database.closeHikariConnection(connection);
 	}
 
-	public static void saveall(String sign, String targettype, List<UUID> players, BigDecimal amount, Boolean isAdd,  RecordData x) {
+	public static void saveall(String sign, String targettype, List<UUID> players, BigDecimal amount, Boolean isAdd,  PlayerData x) {
 		Connection connection = database.getConnectionAndCheck();
 		try {
 			if (targettype.equalsIgnoreCase("all")) {
@@ -355,7 +356,7 @@ public class SQL {
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
 				UUID id = UUID.fromString(rs.getString(1));
-				Cache.cacheUUID(name, id);
+				Cache.insertIntoUUIDCache(name, id);
 			}
 			rs.close();
 			statement.close();
@@ -397,7 +398,7 @@ public class SQL {
 						rsb.close();
 						statementb.close();
 					}
-					PreparedStatement statementc = connection.prepareStatement("select SUM(balance) from mpoints_" + suffix + sign);
+					PreparedStatement statementc = connection.prepareStatement("select SUM(balance) from mpoints_" + suffix + sign + " where hidden != '1'");
 					ResultSet rsc = statementc.executeQuery();
 					if (rsc.next()) {
 						String sumb=  rsc.getString(1);
@@ -436,7 +437,7 @@ public class SQL {
 		database.closeHikariConnection(connection);
 	}
 
-	public static void record(RecordData x,Connection co) {
+	public static void record(PlayerData x, Connection co) {
 		if (MPoints.config.getBoolean("Settings.mysql") && MPoints.config.getBoolean("Settings.transaction-record")) {
 			try {
 				String query;
@@ -446,8 +447,8 @@ public class SQL {
 				statement.setString(2, x.getuid());
 				statement.setString(3, x.getplayer());
 				statement.setString(4, x.getsign());
-				statement.setDouble(5, x.getbalance());
-				statement.setDouble(6, x.getamount());
+				statement.setDouble(5, x.getnewbalance().doubleValue());
+				statement.setDouble(6, x.getamount().doubleValue());
 				statement.setString(7, x.getoperation());
 				statement.setString(8, x.getdate());
 				statement.setString(9, x.getcommand());

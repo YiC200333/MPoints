@@ -36,13 +36,13 @@ public class Placeholder extends PlaceholderExpansion{
 		if (PointsCache.getPointFromCache(sign) == null){
 			return "[MPoints]NOT EXIST SIGN";
 		}
-		if (identifier.contains("balance_sign_")) {
+		if (identifier.contains("balance_sign_") && !identifier.contains("sum")) {
 			if (player == null) {
 			return "0.0";
 		    }
 			BigDecimal a = Cache.getBalanceFromCacheOrDB(player.getUniqueId(),sign);
 			return DataFormat.shown(sign,a);
-		} else if (identifier.contains("balance_value_sign_")) {
+		} else if (identifier.contains("balance_value_sign_") && !identifier.contains("sum")) {
 			if (player == null) {
 				return "0.0";
 			}

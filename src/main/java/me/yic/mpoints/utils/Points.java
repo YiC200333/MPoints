@@ -1,12 +1,9 @@
 package me.yic.mpoints.utils;
 
 import me.yic.mpoints.data.DataFormat;
-import me.yic.mpoints.data.caches.PointsCache;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.UUID;
 
 public class Points {
 	private final String sign;
