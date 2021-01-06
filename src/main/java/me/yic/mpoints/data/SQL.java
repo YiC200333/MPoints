@@ -2,10 +2,10 @@ package me.yic.mpoints.data;
 
 import me.yic.mpoints.MPoints;
 import me.yic.mpoints.data.caches.Cache;
-import me.yic.mpoints.data.caches.PointsCache;
 import me.yic.mpoints.message.Messages;
 import me.yic.mpoints.utils.DatabaseConnection;
 import me.yic.mpoints.utils.PlayerData;
+import me.yic.mpoints.utils.Points;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -86,7 +86,7 @@ public class SQL {
 						+ "primary key (UID));";
 			}
 			statement.executeUpdate(query1);
-			for (String sign : PointsCache.pointsigns) {
+			for (String sign : Points.pointsigns.keySet()) {
 				if (x>30){
 					break;
 				}
@@ -126,7 +126,7 @@ public class SQL {
 			String query2;
             Integer x = 0;
 			PreparedStatement statement = null;
-			for (String sign : PointsCache.pointsigns) {
+			for (String sign : Points.pointsigns.keySet()) {
 				if (x > 30) {
 					break;
 				}
@@ -139,7 +139,7 @@ public class SQL {
                 x = x + 1;
 				statement = co_a.prepareStatement(query1);
 				statement.setString(1, UID);
-				statement.setBigDecimal(2, PointsCache.getPointFromCache(sign).getinitialbal());
+				statement.setBigDecimal(2, Points.getinitialbal(sign));
 				statement.setInt(3, 0);
 				if (MPoints.config.getBoolean("Settings.mysql")) {
 					statement.setString(4, UID);
@@ -370,8 +370,8 @@ public class SQL {
 		try {
 			Connection connection = database.getConnectionAndCheck();
 			Integer x = 0;
-			for (String sign : PointsCache.pointsigns) {
-				if (PointsCache.getPointFromCache(sign).getenablebaltop()) {
+			for (String sign : Points.pointsigns.keySet()) {
+				if (Points.getenablebaltop(sign)) {
 					if (x > 30) {
 						break;
 					}

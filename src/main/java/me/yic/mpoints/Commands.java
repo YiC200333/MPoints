@@ -1,6 +1,5 @@
 package me.yic.mpoints;
 
-import me.yic.mpoints.data.caches.PointsCache;
 import me.yic.mpoints.message.Messages;
 import me.yic.mpoints.message.MessagesManager;
 import me.yic.mpoints.utils.Points;
@@ -30,8 +29,7 @@ public class Commands implements CommandExecutor {
                 case 1: {
                     if (args[0].equalsIgnoreCase("list")) {
                         if (sender.isOp()) {
-                            for (String sign : PointsCache.pointsigns) {
-                                Points x = PointsCache.getPointFromCache(sign);
+                            for (String sign : Points.pointsigns.keySet()) {
                                 sender.sendMessage(sendprefix() + sendMessage(sign, "points_list").replace("%sign%", sign));
                             }
                             return true;
@@ -67,7 +65,7 @@ public class Commands implements CommandExecutor {
             return true;
         } else {
 
-            if (PointsCache.getPointFromCache(args[0]) == null) {
+            if (!Points.pointsigns.containsKey(args[0])) {
                 sender.sendMessage(sendprefix() + sendMessage(null, "points_nosign"));
                 return true;
             }
@@ -86,7 +84,7 @@ public class Commands implements CommandExecutor {
             return ChatColor.translateAlternateColorCodes('&', MessagesManager.messageFile.getString(message));
         } else {
             return ChatColor.translateAlternateColorCodes('&', MessagesManager.messageFile.getString(message)).
-                    replace("%pointname%", PointsCache.getPointFromCache(sign).getpluralname());
+                    replace("%pointname%", Points.getpluralname(sign));
         }
     }
 
@@ -127,6 +125,9 @@ public class Commands implements CommandExecutor {
             maxipages = helplist.size() / 5;
         }else{
             maxipages = helplist.size() / 5 + 1;
+        }
+        if (num > maxipages){
+            num = maxipages;
         }
         sender.sendMessage(sendMessage(null, "help_title_full").replace("%page%", num.toString() + "/" + maxipages.toString()));
         Integer indexpage = 0;

@@ -3,7 +3,7 @@ package me.yic.mpoints.depend;
 import me.yic.mpoints.MPoints;
 import me.yic.mpoints.data.DataFormat;
 import me.yic.mpoints.data.caches.Cache;
-import me.yic.mpoints.data.caches.PointsCache;
+import me.yic.mpoints.utils.Points;
 import org.bukkit.OfflinePlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import java.math.BigDecimal;
@@ -33,7 +33,7 @@ public class Placeholder extends PlaceholderExpansion{
 			return "[MPoints]NOT EXIST SIGN";
 		}
 		String sign = identifier.substring(identifier.indexOf("_sign_") + 6);
-		if (PointsCache.getPointFromCache(sign) == null){
+		if (!Points.pointsigns.containsKey(sign)){
 			return "[MPoints]NOT EXIST SIGN";
 		}
 		if (identifier.contains("balance_sign_") && !identifier.contains("sum")) {

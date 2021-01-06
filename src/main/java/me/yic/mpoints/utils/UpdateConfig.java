@@ -1,5 +1,6 @@
 package me.yic.mpoints.utils;
 
+import me.yic.mpoints.MPoints;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -22,9 +23,9 @@ public class UpdateConfig {
 	public static boolean updatepoint(String u, FileConfiguration config, File cc) {
 		boolean update = false;
 		FileConfiguration ck = YamlConfiguration.loadConfiguration(cc);
-		if (!ck.contains(u + ".setting.hide-comannd-message")) {
-			config.createSection(u + ".setting.hide-comannd-message");
-			config.set(u + ".setting.hide-comannd-message", false);
+		if (!ck.contains(u + Points.settingstring + ".hide-comannd-message")) {
+			config.createSection(u + Points.settingstring + ".hide-comannd-message");
+			config.set(u + Points.settingstring + ".hide-comannd-message", false);
 			update = true;
 		}
 		return update;

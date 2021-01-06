@@ -5,6 +5,7 @@ import me.yic.mpoints.data.DataCon;
 import me.yic.mpoints.task.SendMessTaskS;
 import me.yic.mpoints.utils.PlayerPoints;
 import me.yic.mpoints.utils.PlayerData;
+import me.yic.mpoints.utils.Points;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -97,7 +98,7 @@ public class Cache {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        if (MPoints.isBungeecord() && PointsCache.getPointFromCache(sign).getenablebc()) {
+        if (MPoints.isBungeecord() && Points.getenablebc(sign)) {
         Bukkit.getOnlinePlayers().iterator().next().sendPluginMessage(MPoints.getInstance(), "mpoints:acb", stream.toByteArray());
         }
     }
@@ -115,7 +116,7 @@ public class Cache {
         }
         insertIntoCache(u, sign, newvalue);
         PlayerData pd = new PlayerData(type, u, playername, sign, bal, amount, newvalue, isAdd, reason);
-        if (MPoints.isBungeecord() && PointsCache.getPointFromCache(sign).getenablebc()) {
+        if (MPoints.isBungeecord() && Points.getenablebc(sign)) {
             sendmessave(u, sign, isAdd, pd);
         } else {
             DataCon.save(u, sign, isAdd, pd);
@@ -126,7 +127,7 @@ public class Cache {
         playerdata.clear();
         PlayerData pd = new PlayerData(type, null, null, sign, null, amount, BigDecimal.ZERO, isAdd, reason);
         DataCon.saveall(sign, targettype, amount, isAdd, pd);
-        if (MPoints.isBungeecord() && PointsCache.getPointFromCache(sign).getenablebc()) {
+        if (MPoints.isBungeecord() && Points.getenablebc(sign)) {
             sendmessaveall(sign, targettype, amount, isAdd);
         }
     }

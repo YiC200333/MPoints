@@ -3,10 +3,10 @@ package me.yic.mpoints;
 import me.yic.mpoints.data.DataCon;
 import me.yic.mpoints.data.DataFormat;
 import me.yic.mpoints.data.caches.Cache;
-import me.yic.mpoints.data.caches.PointsCache;
 import me.yic.mpoints.message.Messages;
 import me.yic.mpoints.message.MessagesManager;
 import me.yic.mpoints.task.SendMessTaskS;
+import me.yic.mpoints.utils.Points;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -96,7 +96,7 @@ public class CommandHandler {
                     return true;
                 }
 
-                if (!(sender.isOp() || PointsCache.getPointFromCache(sign).getallowpay())) {
+                if (!(sender.isOp() || Points.getallowpay(sign))) {
                     sender.sendMessage(sendprefix() + sendMessage(null, "no_permission"));
                     return true;
                 }
@@ -264,7 +264,7 @@ public class CommandHandler {
 
                         String com = commandp + " " + commandName + " " + args[0 + commandindex] + " " + args[1 + commandindex] + " " + reason;
 
-                        Boolean hidecommandmessage = PointsCache.getPointFromCache(sign).gethidemessage();
+                        Boolean hidecommandmessage = Points.gethidemessage(sign);
 
                         switch (commandName) {
                             case "give": {
@@ -526,7 +526,7 @@ public class CommandHandler {
             return ChatColor.translateAlternateColorCodes('&', MessagesManager.messageFile.getString(message));
         } else {
             return ChatColor.translateAlternateColorCodes('&', MessagesManager.messageFile.getString(message)).
-                    replace("%pointname%", PointsCache.getPointFromCache(sign).getpluralname());
+                    replace("%pointname%", Points.getpluralname(sign));
         }
     }
 
@@ -563,6 +563,9 @@ public class CommandHandler {
         }else{
             maxipages = helplist.size() / 5 + 1;
         }
+        if (num > maxipages){
+            num = maxipages;
+        }
         sender.sendMessage(sendMessage(null, "help_title_full").replace("%page%", num.toString() + "/" + maxipages.toString()));
         Integer indexpage = 0;
         while (indexpage < 5) {
@@ -574,7 +577,7 @@ public class CommandHandler {
     }
 
     private static void broadcastSendMessage(boolean ispublic, String sign, UUID u, String s1) {
-        if (!MPoints.isBungeecord() || !PointsCache.getPointFromCache(sign).getenablebc()) {
+        if (!MPoints.isBungeecord() || !Points.getenablebc(sign)) {
             return;
         }
 

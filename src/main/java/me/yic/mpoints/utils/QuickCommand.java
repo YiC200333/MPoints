@@ -1,7 +1,6 @@
 package me.yic.mpoints.utils;
 
 import me.yic.mpoints.CommandHandler;
-import me.yic.mpoints.data.caches.PointsCache;
 import me.yic.mpoints.message.MessagesManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -35,7 +34,7 @@ public class QuickCommand extends Command {
             return ChatColor.translateAlternateColorCodes('&', MessagesManager.messageFile.getString(message));
         } else {
             return ChatColor.translateAlternateColorCodes('&', MessagesManager.messageFile.getString(message)).
-                    replace("%pointname%", PointsCache.getPointFromCache(sign).getpluralname());
+                    replace("%pointname%", Points.getpluralname(sign));
         }
     }
 

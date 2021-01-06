@@ -1,42 +1,20 @@
 package me.yic.mpoints.utils;
 
 import me.yic.mpoints.data.DataFormat;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 
-public class Points {
-	private final String sign;
-	private final BigDecimal initialbal;
-	private final Boolean enablebaltop;
-	private final Boolean allowpay;
-	private final Boolean hidemessage;
-	private final Boolean enablebc;
-	private final String singularname;
-	private final String pluralname;
-	private final Boolean integerbal;
-	private final DecimalFormat decimalFormat;
-	private final String displayformat;
-	private final BigDecimal maxnumber;
+public class Points{
 
-	public Points(String sign,String initialbal,Boolean enablebaltop,Boolean allowpay,Boolean hidemessage,Boolean enablebc,
-				  String singularname,String pluralname,
-				  Boolean integerbal,String separator,String displayformat,String maxnumber) {
-		this.sign = sign;
-		this.initialbal = formatString(integerbal,initialbal);
-		this.enablebaltop = enablebaltop;
-		this.allowpay = allowpay;
-		this.hidemessage = hidemessage;
-		this.enablebc = enablebc;
-		this.singularname = singularname;
-		this.pluralname = pluralname;
-		this.integerbal = integerbal;
-		this.decimalFormat = DataFormat.setformat(integerbal,separator);
-		this.displayformat = displayformat;
-		this.maxnumber = DataFormat.setmaxnumber(maxnumber);
-	}
+	public static String settingstring = ".settings";
 
-	private BigDecimal formatString(Boolean isInteger ,String am) {
+	public static FileConfiguration PointsFile;
+	public static HashMap<String, String> pointsigns = new HashMap<>();
+
+	private static BigDecimal formatString(Boolean isInteger ,String am) {
 		BigDecimal bigDecimal = new BigDecimal(am);
 		if (isInteger) {
 			return bigDecimal.setScale(0, BigDecimal.ROUND_DOWN);
@@ -45,52 +23,53 @@ public class Points {
 		}
 	}
 
-	public String getsign() {
-		return sign;
+	public static BigDecimal getinitialbal(String sign) {
+		String initialbal = PointsFile.getString(pointsigns.get(sign) + settingstring + ".initial-bal");
+		return formatString(getintegerbal(sign),initialbal);
 	}
 
-	public BigDecimal getinitialbal() {
-		return initialbal;
+	public static Boolean getenablebaltop(String sign) {
+		return PointsFile.getBoolean(pointsigns.get(sign) + settingstring + ".enable-baltop");
 	}
 
-	public Boolean getenablebaltop() {
-		return enablebaltop;
+	public static Boolean getallowpay(String sign) {
+		return PointsFile.getBoolean(pointsigns.get(sign) + settingstring + ".allow-pay-command");
 	}
 
-	public Boolean getallowpay() {
-		return allowpay;
+	public static Boolean gethidemessage(String sign) {
+		return PointsFile.getBoolean(pointsigns.get(sign) + settingstring + ".hide-comannd-message");
 	}
 
-	public Boolean gethidemessage() {
-		return hidemessage;
+	public static Boolean getenablebc(String sign) {
+		return PointsFile.getBoolean(pointsigns.get(sign) + settingstring + ".enable-bungeecord");
 	}
 
-	public Boolean getenablebc() {
-		return enablebc;
+	public static String getsingularname(String sign) {
+		return PointsFile.getString(pointsigns.get(sign) + ".display.singular-name");
 	}
 
-	public String getsingularname() {
-		return singularname;
+	public static String getpluralname(String sign) {
+		return PointsFile.getString(pointsigns.get(sign) + ".display.plural-name");
 	}
 
-	public String getpluralname() {
-		return pluralname;
+	public static Boolean getintegerbal(String sign) {
+		return PointsFile.getBoolean(pointsigns.get(sign) + ".display.integer-bal");
 	}
 
-	public Boolean getintegerbal() {
-		return integerbal;
+	public static DecimalFormat getdecimalFormat(String sign) {
+		String separator = PointsFile.getString(pointsigns.get(sign) + ".display.thousands-separator");
+		return DataFormat.setformat(getintegerbal(sign),separator);
 	}
 
-	public DecimalFormat getdecimalFormat() {
-		return decimalFormat;
+	public static String getdisplayformat(String sign) {
+		return PointsFile.getString(pointsigns.get(sign) + ".display.display-format");
 	}
 
-	public String getdisplayformat() {
-		return displayformat;
+	public static BigDecimal getmaxnumber(String sign) {
+		return DataFormat.setmaxnumber(PointsFile.getString(pointsigns.get(sign) + ".display.max-number"));
 	}
 
-	public BigDecimal getmaxnumber() {
-		return maxnumber;
+	public static void CleanCache() {
+		pointsigns.clear();
 	}
-
 }

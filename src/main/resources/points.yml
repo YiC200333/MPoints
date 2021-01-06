@@ -1,6 +1,6 @@
 #Support up to 30 points
 demo1:
-  setting:
+  settings:
     #Point sign, Please do not modify the currency mark after confirmation
     sign: demo1
     #Initial amount of point
@@ -31,7 +31,7 @@ demo1:
     #command name
     command: mpa
 demo2:
-  setting:
+  settings:
     sign: demo2
     initial-bal: 0.0
     enable-baltop: true
