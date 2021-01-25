@@ -45,7 +45,6 @@ public class SPsync implements PluginMessageListener {
         String serversign = input.readUTF();
         String pointsign = input.readUTF();
         if (!serversign.equals(MPoints.getSign())) {
-            MPoints.getInstance().logger(null,"qqqqq");
             return;
         }
 
@@ -54,7 +53,6 @@ public class SPsync implements PluginMessageListener {
             String bal = input.readUTF();
             Cache.insertIntoCache(u, pointsign, DataFormat.formatString(pointsign, bal));
         } else if (type.equalsIgnoreCase("message")) {
-            MPoints.getInstance().logger(null,"mmmm");
             Player p = Bukkit.getPlayer(UUID.fromString(input.readUTF()));
             String mess = input.readUTF();
             if (p != null) {

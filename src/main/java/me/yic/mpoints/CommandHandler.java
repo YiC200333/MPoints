@@ -594,7 +594,6 @@ public class CommandHandler {
 
     private static void broadcastSendMessage(boolean ispublic, String sign, UUID u, String s1) {
         if (!MPoints.isBungeecord() || !Points.getenablebc(sign)) {
-            MPoints.getInstance().logger(null,"aaqqqqq");
             return;
         }
 
