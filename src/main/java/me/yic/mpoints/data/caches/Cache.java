@@ -143,7 +143,7 @@ public class Cache {
 
     private static void presavedata(UUID u, String sign, Boolean isAdd, PlayerData pd) {
 
-        if (!MPoints.isBungeecord() || !Points.getenablebc(sign)) {
+        if (MPoints.isBungeecord() && Points.getenablebc(sign)) {
             sendmessave(u, sign, isAdd, pd);
         } else {
             if (ServerINFO.RequireAsyncRun) {
