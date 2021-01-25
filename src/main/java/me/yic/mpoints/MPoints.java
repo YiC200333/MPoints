@@ -1,3 +1,21 @@
+/*
+ *  This file (MPoints.java) is a part of project MPoints
+ *  Copyright (C) YiC and contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ *  or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ *  for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package me.yic.mpoints;
 
 import me.yic.mpoints.data.DataCon;
@@ -7,11 +25,11 @@ import me.yic.mpoints.depend.Placeholder;
 import me.yic.mpoints.listeners.BSListening;
 import me.yic.mpoints.listeners.ConnectionListeners;
 import me.yic.mpoints.listeners.SPsync;
-import me.yic.mpoints.message.Messages;
-import me.yic.mpoints.message.MessagesManager;
+import me.yic.mpoints.lang.MessagesManager;
 import me.yic.mpoints.task.Baltop;
 import me.yic.mpoints.task.Updater;
 import me.yic.mpoints.utils.PointsConfig;
+import me.yic.mpoints.utils.ServerINFO;
 import me.yic.mpoints.utils.UpdateConfig;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -25,182 +43,201 @@ import java.lang.reflect.Field;
 
 public class MPoints extends JavaPlugin {
 
-	private static MPoints instance;
-	public static FileConfiguration config;
-	private MessagesManager messageManager;
-	private PointsConfig pointsconfig;
-	private BukkitTask refresherTask = null;
-	Metrics metrics = null;
-	private Placeholder papiExpansion = null;
-	public static Boolean ddrivers = false;
-	public static Boolean hasbcpoint = false;
-	public static CommandMap commandMap = null;
+    private static MPoints instance;
+    public static FileConfiguration config;
+    private MessagesManager messageManager;
+    private PointsConfig pointsconfig;
+    private BukkitTask refresherTask = null;
+    Metrics metrics = null;
+    private Placeholder papiExpansion = null;
+    public static Boolean hasbcpoint = false;
+    public static CommandMap commandMap = null;
 
-	public void onEnable() {
-		instance = this;
-		load();
-		if (checkup()) {
-			new Updater().runTaskAsynchronously(this);
-		}
-		// 检查更新
-		messageManager = new MessagesManager(this);
-		messageManager.load();
+    @SuppressWarnings("ConstantConditions")
+    public void onEnable() {
+        instance = this;
+        load();
+        readserverinfo();
+        if (checkup()) {
+            new Updater().runTaskAsynchronously(this);
+        }
+        // 检查更新
+        messageManager = new MessagesManager(this);
+        messageManager.load();
 
-		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-			logger("发现 PlaceholderAPI");
-			setupPlaceHolderAPI();
-		}
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            logger("发现 PlaceholderAPI", null);
+            setupPlaceHolderAPI();
+        }
 
-		if (Bukkit.getPluginManager().getPlugin("DatabaseDrivers") != null) {
-			logger("发现 DatabaseDrivers");
-			ddrivers = true;
-		}
+        if (Bukkit.getPluginManager().getPlugin("DatabaseDrivers") != null) {
+            logger("发现 DatabaseDrivers", null);
+            ServerINFO.DDrivers = true;
+        }
 
-		try {
-			final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-			bukkitCommandMap.setAccessible(true);
-			commandMap = (CommandMap) bukkitCommandMap.get(getServer());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        try {
+            final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            bukkitCommandMap.setAccessible(true);
+            commandMap = (CommandMap) bukkitCommandMap.get(getServer());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		getServer().getPluginManager().registerEvents(new ConnectionListeners(), this);
+        getServer().getPluginManager().registerEvents(new ConnectionListeners(), this);
 
-		metrics = new Metrics(this, 9061);
+        metrics = new Metrics(this, 9061);
 
-		Bukkit.getPluginCommand("mpoints").setExecutor(new Commands());
+        Bukkit.getPluginCommand("mpoints").setExecutor(new Commands());
 
-		pointsconfig = new PointsConfig(this);
-		if (!pointsconfig.load()) {
-			onDisable();
-			return;
-		}
+        pointsconfig = new PointsConfig();
+        if (!pointsconfig.load()) {
+            onDisable();
+            return;
+        }
 
-		if (!DataCon.create()) {
-			onDisable();
-			return;
-		}
+        allowHikariConnectionPooling();
+        if (!DataCon.create()) {
+            onDisable();
+            return;
+        }
 
-		Cache.baltop();
+        Cache.baltop();
 
-		loadguidshop();
+        loadguidshop();
 
-		if (hasbcpoint) {
-			if (isBungeecord()) {
-				getServer().getMessenger().registerIncomingPluginChannel(this, "mpoints:aca", new SPsync());
-				getServer().getMessenger().registerOutgoingPluginChannel(this, "mpoints:acb");
-				logger("已开启BC同步");
-			} else if (!config.getBoolean("Settings.mysql")) {
-				if (config.getString("SQLite.path").equalsIgnoreCase("Default")) {
-					logger("SQLite文件路径设置错误");
-					logger("BC同步未开启");
-				}
-			}
-		}
+        if (hasbcpoint) {
+            if (isBungeecord()) {
+                getServer().getMessenger().registerIncomingPluginChannel(this, "mpoints:aca", new SPsync());
+                getServer().getMessenger().registerOutgoingPluginChannel(this, "mpoints:acb");
+                logger("已开启BungeeCord同步", null);
+            } else if (!config.getBoolean("Settings.mysql")) {
+                if (config.getString("SQLite.path").equalsIgnoreCase("Default")) {
+                    logger("SQLite文件路径设置错误", null);
+                    logger("BungeeCord同步未开启", null);
+                }
+            }
+        }
 
-		int time = config.getInt("Settings.refresh-time");
-		if (time < 30) {
-			time = 30;
-		}
+        int time = config.getInt("Settings.refresh-time");
+        if (time < 30) {
+            time = 30;
+        }
 
-		refresherTask = new Baltop().runTaskTimerAsynchronously(this, time * 20, time * 20);
-		logger("===== YiC =====");
+        refresherTask = new Baltop().runTaskTimerAsynchronously(this, time * 20, time * 20);
+        logger(null, "===== YiC =====");
 
-	}
+    }
 
-	public void onDisable() {
-		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-			try {
-				papiExpansion.unregister();
-			} catch (NoSuchMethodError ignored) {
-			}
-		}
+    public void onDisable() {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            try {
+                papiExpansion.unregister();
+            } catch (NoSuchMethodError ignored) {
+            }
+        }
 
-		if (isBungeecord()) {
-			getServer().getMessenger().unregisterIncomingPluginChannel(this, "mpoints:aca", new SPsync());
-			getServer().getMessenger().unregisterOutgoingPluginChannel(this, "mpoints:acb");
-		}
+        if (isBungeecord()) {
+            getServer().getMessenger().unregisterIncomingPluginChannel(this, "mpoints:aca", new SPsync());
+            getServer().getMessenger().unregisterOutgoingPluginChannel(this, "mpoints:acb");
+        }
 
-		refresherTask.cancel();
-		SQL.close();
-		logger("MPoints已成功卸载");
-	}
+        refresherTask.cancel();
+        SQL.close();
+        logger("MPoints已成功卸载", null);
+    }
 
-	public static MPoints getInstance() {
-		return instance;
-	}
+    public static MPoints getInstance() {
+        return instance;
+    }
 
-	public void reloadMessages() {
-		messageManager.load();
-	}
+    public void reloadMessages() {
+        messageManager.load();
+    }
 
-	public boolean reloadPoints() {
-		return pointsconfig.load();
-	}
+    public boolean reloadPoints() {
+        return pointsconfig.load();
+    }
 
-	public static boolean allowHikariConnectionPooling() {
-		if (!config.getBoolean("Settings.mysql")) {
-			return false;
-		}
-		return MPoints.config.getBoolean("Pool-Settings.usepool");
-	}
+    public static void allowHikariConnectionPooling() {
+        if (!config.getBoolean("Settings.mysql")) {
+            return;
+        }
+        ServerINFO.EnableConnectionPool = MPoints.config.getBoolean("Pool-Settings.usepool");
+    }
 
-	public static String getSign() {
-		return config.getString("BungeeCord.sign");
-	}
+    public static String getSign() {
+        return config.getString("BungeeCord.sign");
+    }
 
-	private void setupPlaceHolderAPI() {
-		papiExpansion = new Placeholder(this);
-		if (papiExpansion.register()) {
-			getLogger().info("PlaceholderAPI successfully hooked");
-		} else {
-			getLogger().info("PlaceholderAPI unsuccessfully hooked");
-		}
-	}
+    private void setupPlaceHolderAPI() {
+        papiExpansion = new Placeholder(this);
+        if (papiExpansion.register()) {
+            getLogger().info("PlaceholderAPI successfully hooked");
+        } else {
+            getLogger().info("PlaceholderAPI unsuccessfully hooked");
+        }
+    }
 
-	public String lang() {
-		return config.getString("Settings.language");
-	}
+    public void readserverinfo() {
+        ServerINFO.Lang = config.getString("Settings.language");
+        ServerINFO.Sign = config.getString("BungeeCord.sign");
 
-	public void logger(String mess) {
-		getLogger().info(Messages.systemMessage(mess));
-	}
+        ServerINFO.RequireAsyncRun = config.getBoolean("Settings.mysql");
+    }
 
-	public static boolean isBungeecord() {
-		if (!hasbcpoint) {
-			return false;
-		}
 
-		if (config.getBoolean("Settings.mysql")) {
-			return true;
-		}
+    public void logger(String tag, String message) {
+        if (tag == null) {
+            getLogger().info(message);
+        } else {
+            if (message == null) {
+                getLogger().info(MessagesManager.systemMessage(tag));
+            } else {
+                if (message.startsWith("<#>")) {
+                    getLogger().info(message.substring(3) + MessagesManager.systemMessage(tag));
+                } else {
+                    getLogger().info(MessagesManager.systemMessage(tag) + message);
+                }
+            }
+        }
+    }
 
-		return !config.getBoolean("Settings.mysql") & !config.getString("SQLite.path").equalsIgnoreCase("Default");
+    @SuppressWarnings("ConstantConditions")
+    public static boolean isBungeecord() {
+        if (!hasbcpoint) {
+            return false;
+        }
 
-	}
+        if (config.getBoolean("Settings.mysql")) {
+            return true;
+        }
 
-	public static boolean checkup() {
-		return config.getBoolean("Settings.check-update");
-	}
+        return !config.getBoolean("Settings.mysql") & !config.getString("SQLite.path").equalsIgnoreCase("Default");
 
-	private void load() {
-		saveDefaultConfig();
-		update_config();
-		reloadConfig();
-		config = getConfig();
-	}
+    }
 
-	private void loadguidshop() {
-		if (Bukkit.getPluginManager().getPlugin("BossShopPro") != null) {
-			getServer().getPluginManager().registerEvents(new BSListening(), this);
-		}
-	}
+    public static boolean checkup() {
+        return config.getBoolean("Settings.check-update");
+    }
 
-	private void update_config() {
-		File config = new File(this.getDataFolder(), "config.yml");
-		boolean update = UpdateConfig.update(getConfig(), config);
-		if (update) {
-			saveConfig();
-		}
-	}
+    private void load() {
+        saveDefaultConfig();
+        update_config();
+        reloadConfig();
+        config = getConfig();
+    }
+
+    private void loadguidshop() {
+        if (Bukkit.getPluginManager().getPlugin("BossShopPro") != null) {
+            getServer().getPluginManager().registerEvents(new BSListening(), this);
+        }
+    }
+
+    private void update_config() {
+        File config = new File(this.getDataFolder(), "config.yml");
+        boolean update = UpdateConfig.update(getConfig(), config);
+        if (update) {
+            saveConfig();
+        }
+    }
 }

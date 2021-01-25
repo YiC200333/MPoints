@@ -1,26 +1,42 @@
+/*
+ *  This file (Commands.java) is a part of project MPoints
+ *  Copyright (C) YiC and contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License as published by the
+ *  Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ *  or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ *  for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package me.yic.mpoints;
 
-import me.yic.mpoints.message.Messages;
-import me.yic.mpoints.message.MessagesManager;
+
+import me.yic.mpoints.lang.MessagesManager;
 import me.yic.mpoints.utils.Points;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 public class Commands implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
         String commandName = cmd.getName().toLowerCase();
         if (args.length <= 1) {
             switch (args.length) {
                 case 0: {
                     if (commandName.equalsIgnoreCase("mpoints")) {
-                        sendHelpMessage(sender, 1);
+                        CommandHandler.sendHelpMessage(sender, 1);
                         return true;
                     }
                     break;
@@ -40,9 +56,9 @@ public class Commands implements CommandExecutor {
                         if (sender.isOp()) {
                             MPoints.getInstance().reloadMessages();
                             if (!MPoints.getInstance().reloadPoints()) {
-                                sender.sendMessage(sendprefix() + Messages.systemMessage("§cpoints.yml重载错误"));
+                                sender.sendMessage(sendprefix() + MessagesManager.systemMessage("§cpoints.yml重载错误"));
                             }
-                            sender.sendMessage(sendprefix() + Messages.systemMessage("§amessage.yml 和 points.yml 重载成功"));
+                            sender.sendMessage(sendprefix() + MessagesManager.systemMessage("§amessage.yml 和 points.yml 重载成功"));
                             return true;
                         }
                     }
@@ -53,7 +69,7 @@ public class Commands implements CommandExecutor {
                     }
 
                     if (args[0].equalsIgnoreCase("help")) {
-                        sendHelpMessage(sender, 1);
+                        CommandHandler.sendHelpMessage(sender, 1);
                         return true;
                     }
                     break;
@@ -61,7 +77,7 @@ public class Commands implements CommandExecutor {
             }
             return true;
         } else if (args.length <= 2 && args[0].equalsIgnoreCase("help")) {
-            sendHelpMessage(sender, Integer.valueOf(args[1]));
+            CommandHandler.sendHelpMessage(sender, Integer.valueOf(args[1]));
             return true;
         } else {
 
@@ -90,52 +106,10 @@ public class Commands implements CommandExecutor {
 
     public static void showVersion(CommandSender sender) {
         sender.sendMessage(sendMessage(null, "prefix") + "§6 MPoints §f(Version: "
-                + MPoints.getInstance().getDescription().getVersion() + ") §6|§7 Author: §f" + Messages.getAuthor());
-    }
-
-    private static void sendHelpMessage(CommandSender sender, Integer num) {
-        List<String> helplist = new ArrayList<>();
-        helplist.add(sendMessage(null, "help1"));
-        helplist.add(sendMessage(null, "help2"));
-        helplist.add(sendMessage(null, "help3"));
-        helplist.add(sendMessage(null, "help4"));
-        helplist.add(sendMessage(null, "help5"));
-        if (sender.isOp() | sender.hasPermission("mpoints.admin.list")) {
-            helplist.add(sendMessage(null, "help6"));
-        }
-        if (sender.isOp() | sender.hasPermission("mpoints.admin.give")) {
-            helplist.add(sendMessage(null, "help7"));
-            helplist.add(sendMessage(null, "help10"));
-        }
-        if (sender.isOp() | sender.hasPermission("mpoints.admin.take")) {
-            helplist.add(sendMessage(null, "help8"));
-            helplist.add(sendMessage(null, "help11"));
-        }
-        if (sender.isOp() | sender.hasPermission("mpoints.admin.set")) {
-            helplist.add(sendMessage(null, "help9"));
-        }
-        if (sender.isOp() | sender.hasPermission("mpoints.admin.balancetop")) {
-            helplist.add(sendMessage(null, "help12"));
-        }
-        if (sender.isOp()) {
-            helplist.add(sendMessage(null, "help13"));
-        }
-        Integer maxipages = 0;
-        if (helplist.size() % 5 == 0){
-            maxipages = helplist.size() / 5;
-        }else{
-            maxipages = helplist.size() / 5 + 1;
-        }
-        if (num > maxipages){
-            num = maxipages;
-        }
-        sender.sendMessage(sendMessage(null, "help_title_full").replace("%page%", num.toString() + "/" + maxipages.toString()));
-        Integer indexpage = 0;
-        while (indexpage < 5) {
-            if (helplist.size() > indexpage + (num - 1) * 5) {
-                sender.sendMessage(helplist.get(indexpage + (num - 1) * 5));
-            }
-            indexpage += 1;
+                + MPoints.getInstance().getDescription().getVersion() + ") §6|§7 Author: §f" + MessagesManager.getAuthor());
+        String trs = MessagesManager.getTranslatorS();
+        if (trs != null) {
+            sender.sendMessage(sendMessage(null, "prefix") + "§7 Translator (system): §f" + trs);
         }
     }
 }

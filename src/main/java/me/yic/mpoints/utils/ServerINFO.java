@@ -1,5 +1,5 @@
 /*
- *  This file (Baltop.java) is a part of project MPoints
+ *  This file (ServerINFO.java) is a part of project MPoints
  *  Copyright (C) YiC and contributors
  *
  *  This program is free software: you can redistribute it and/or modify it
@@ -16,22 +16,18 @@
  *  with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package me.yic.mpoints.task;
+package me.yic.mpoints.utils;
 
-import me.yic.mpoints.data.SQL;
-import me.yic.mpoints.data.caches.Cache;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
+public class ServerINFO {
 
-public class Baltop extends BukkitRunnable {
+    public static String Lang;
 
-    @Override
-    public void run() {
-        Cache.baltop_uid.clear();
-        Cache.baltop_name.clear();
-        SQL.getBaltop();
-        if (Bukkit.getOnlinePlayers().size() == 0) {
-            Cache.clearCache();
-        }
-    }
+    public static Boolean EnableConnectionPool = false;
+
+    public static String Sign;
+
+    public static Boolean DDrivers = false;
+
+    public static Boolean RequireAsyncRun = false;
+
 }
