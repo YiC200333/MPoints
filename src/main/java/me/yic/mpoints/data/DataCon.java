@@ -71,7 +71,7 @@ public class DataCon extends MPoints {
     }
 
     public static void newPlayer(Player a) {
-        SQL.newPlayer(a);
+        SQLCreateAccount.newPlayer(a);
     }
 
     public static void getBal(UUID u, String sign) {

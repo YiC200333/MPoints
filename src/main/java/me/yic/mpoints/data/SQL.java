@@ -24,8 +24,6 @@ import me.yic.mpoints.utils.DatabaseConnection;
 import me.yic.mpoints.utils.PlayerData;
 import me.yic.mpoints.utils.Points;
 import me.yic.mpoints.utils.ServerINFO;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -37,8 +35,8 @@ public class SQL {
 
     public final static DatabaseConnection database = new DatabaseConnection();
     private static final String encoding = MPoints.config.getString("MySQL.encoding");
-    private static final String dataname1 = "playerinfo";
-    private static final String dataname2 = "record";
+    public static final String dataname1 = "playerinfo";
+    public static final String dataname2 = "record";
     public static String suffix = "";
 
     public static boolean con() {
@@ -131,50 +129,22 @@ public class SQL {
         }
     }
 
-    public static void newPlayer(Player player) {
-        Connection connection = database.getConnectionAndCheck();
-        checkUser(player, connection);
-        selectUser(player.getUniqueId().toString(), player.getName(), connection);
-        database.closeHikariConnection(connection);
-    }
-
-    private static void createAccount(String UID, String user, Connection co_a) {
+    public static void createDAccount(String sign, String UID, Connection co_a) {
         try {
             String query1;
-            String query2;
-            int x = 0;
             PreparedStatement statement;
-            for (String sign : Points.pointsigns.keySet()) {
-                if (x > 30) {
-                    break;
-                }
-                if (MPoints.config.getBoolean("Settings.mysql")) {
-                    query1 = "INSERT INTO mpoints_" + suffix + sign + "(UID,balance,hidden) values(?,?,?) "
-                            + "ON DUPLICATE KEY UPDATE UID = ?";
-                } else {
-                    query1 = "INSERT INTO mpoints_" + suffix + sign + "(UID,balance,hidden) values(?,?,?) ";
-                }
-                x = x + 1;
-                statement = co_a.prepareStatement(query1);
-                statement.setString(1, UID);
-                statement.setBigDecimal(2, Points.getinitialbal(sign));
-                statement.setInt(3, 0);
-                if (MPoints.config.getBoolean("Settings.mysql")) {
-                    statement.setString(4, UID);
-                }
-                statement.executeUpdate();
-            }
             if (MPoints.config.getBoolean("Settings.mysql")) {
-                query2 = "INSERT INTO mpoints_" + suffix + dataname1 + "(UID,player) values(?,?) "
+                query1 = "INSERT INTO mpoints_" + suffix + sign + "(UID,balance,hidden) values(?,?,?) "
                         + "ON DUPLICATE KEY UPDATE UID = ?";
             } else {
-                query2 = "INSERT INTO mpoints_" + suffix + dataname1 + "(UID,player) values(?,?) ";
+                query1 = "INSERT INTO mpoints_" + suffix + sign + "(UID,balance,hidden) values(?,?,?) ";
             }
-            statement = co_a.prepareStatement(query2);
+            statement = co_a.prepareStatement(query1);
             statement.setString(1, UID);
-            statement.setString(2, user);
+            statement.setBigDecimal(2, Points.getinitialbal(sign));
+            statement.setInt(3, 0);
             if (MPoints.config.getBoolean("Settings.mysql")) {
-                statement.setString(3, UID);
+                statement.setString(4, UID);
             }
             statement.executeUpdate();
             statement.close();
@@ -182,18 +152,6 @@ public class SQL {
             e.printStackTrace();
         }
 
-    }
-
-    private static void updateUser(String UID, String user, Connection co_a) {
-        try {
-            PreparedStatement statement = co_a.prepareStatement("update mpoints_" + suffix + dataname1 + " set player = ? where UID = ?");
-            statement.setString(1, user);
-            statement.setString(2, UID);
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void save(UUID u, String sign, Boolean isAdd, PlayerData pd) {
@@ -293,6 +251,8 @@ public class SQL {
             if (rs.next()) {
                 BigDecimal cacheThisAmt = DataFormat.formatString(sign, rs.getString(2));
                 Cache.insertIntoCache(uuid, sign, cacheThisAmt);
+            }else{
+                createDAccount(sign, uuid.toString(), connection);
             }
 
             rs.close();
@@ -300,60 +260,6 @@ public class SQL {
             database.closeHikariConnection(connection);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    private static void checkUser(Player player, Connection connection) {
-        try {
-            String query;
-
-            if (MPoints.config.getBoolean("Settings.mysql")) {
-                query = "select * from mpoints_" + suffix + dataname1 + " where binary player = ?";
-            } else {
-                query = "select * from mpoints_" + suffix + dataname1 + " where player = ?";
-            }
-
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, player.getName());
-
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                if (!player.getUniqueId().toString().equals(rs.getString(1))) {
-                    if (player.isOnline()) {
-                        Bukkit.getScheduler().runTask(MPoints.getInstance(), () ->
-                                player.kickPlayer("[MPoints] The player with the same name exists on the server"));
-                    }
-                }
-            }
-
-            rs.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void selectUser(String UID, String name, Connection connection) {
-        String user = "#";
-
-        try {
-            PreparedStatement statement = connection.prepareStatement("select * from mpoints_" + suffix + dataname1 + " where UID = ?");
-            statement.setString(1, UID);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                user = rs.getString(2);
-            } else {
-                user = name;
-                createAccount(UID, user, connection);
-            }
-            rs.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        if (!user.equals(name) && !user.equals("#")) {
-            updateUser(UID, name, connection);
-            MPoints.getInstance().logger(" 名称已更改!", "<#>" + name);
         }
     }
 
