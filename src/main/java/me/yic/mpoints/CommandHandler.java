@@ -161,7 +161,7 @@ public class CommandHandler {
                     return true;
                 }
 
-                String com = commandp + " " + commandName + " " + args[commandindex] + " " + args[1 + commandindex];
+                String com = commandp + " " + commandName + " " + args[commandindex] + " " + amount.toString();
                 Cache.change(((Player) sender).getUniqueId(), sender.getName(), sign, amount, false, "PLAYER_COMMAND", com);
                 sender.sendMessage(sendprefix() + sendMessage(sign, "pay")
                         .replace("%player%", args[commandindex])
@@ -278,7 +278,7 @@ public class CommandHandler {
                             return true;
                         }
 
-                        String com = commandp + " " + commandName + " " + args[commandindex] + " " + args[1 + commandindex] + " " + reason;
+                        String com = commandp + " " + commandName + " " + args[commandindex] + " " + amount.toString() + " " + reason;
 
                         Boolean hidecommandmessage = Points.gethidemessage(sign);
 
@@ -441,7 +441,7 @@ public class CommandHandler {
 
                         String amountFormatted = DataFormat.shown(sign, amount);
 
-                        String com = commandp + " " + commandName + " " + args[commandindex] + " " + args[1 + commandindex] + " " + args[2 + commandindex] + " " + args[3 + commandindex];
+                        String com = commandp + " " + commandName + " " + args[commandindex] + " " + args[1 + commandindex] + " " + amount.toString() + " " + args[3 + commandindex];
 
                         switch (commandName) {
                             case "give": {

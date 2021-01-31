@@ -20,11 +20,9 @@ package me.yic.mpoints.data.caches;
 
 import me.yic.mpoints.MPoints;
 import me.yic.mpoints.data.DataCon;
-import me.yic.mpoints.task.SendMessTaskS;
 import me.yic.mpoints.utils.PlayerData;
 import me.yic.mpoints.utils.PlayerPoints;
 import me.yic.mpoints.utils.Points;
-import me.yic.mpoints.utils.ServerINFO;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -138,20 +136,10 @@ public class Cache {
         }
         insertIntoCache(u, sign, newvalue);
         PlayerData pd = new PlayerData(type, u, playername, sign, bal, amount, newvalue, isAdd, reason);
-        presavedata(u, sign, isAdd, pd);
-    }
-
-    private static void presavedata(UUID u, String sign, Boolean isAdd, PlayerData pd) {
-
         if (MPoints.isBungeecord() && Points.getenablebc(sign)) {
             sendmessave(u, sign, isAdd, pd);
         } else {
-            if (ServerINFO.RequireAsyncRun) {
-                Bukkit.getScheduler().runTaskAsynchronously(MPoints.getInstance(), () ->
-                        DataCon.save(u, sign, isAdd, pd));
-            } else {
-                DataCon.save(u, sign, isAdd, pd);
-            }
+            DataCon.save(u, sign, isAdd, pd);
         }
     }
 
@@ -240,15 +228,10 @@ public class Cache {
     }
 
 
-
     private static void SendMessTask(ByteArrayOutputStream stream, UUID u, String sign, Boolean isAdd, PlayerData pd) {
-        if (ServerINFO.RequireAsyncRun) {
-            new SendMessTaskS(stream, u, sign, isAdd, pd).runTaskAsynchronously(MPoints.getInstance());
-        } else {
-            Bukkit.getOnlinePlayers().iterator().next().sendPluginMessage(MPoints.getInstance(), "mpoints:acb", stream.toByteArray());
-            if (u != null) {
-                DataCon.save(u, sign, isAdd, pd);
-            }
+        Bukkit.getOnlinePlayers().iterator().next().sendPluginMessage(MPoints.getInstance(), "mpoints:acb", stream.toByteArray());
+        if (u != null) {
+            DataCon.save(u, sign, isAdd, pd);
         }
     }
 }
