@@ -70,11 +70,11 @@ public class ConnectionListeners implements Listener {
             return;
         }
         player.sendMessage("§f[MPoints]§b" + MessagesManager.systemMessage("发现新版本 ") + Updater.newVersion);
-        player.sendMessage("§f[MPoints]§ahttps://www.spigotmc.org/resources/xconomy.75669/");
+        player.sendMessage("§f[MPoints]§ahttps://www.spigotmc.org/resources/mpoints.85184/");
 
         if (ServerINFO.Lang.equalsIgnoreCase("Chinese")
                 | ServerINFO.Lang.equalsIgnoreCase("ChineseTW")) {
-            player.sendMessage("§f[MPoints]§ahttps://www.mcbbs.net/thread-962904-1-1.html");
+            player.sendMessage("§f[MPoints]§ahttps://www.mcbbs.net/thread-1130411-1-1.html");
         }
 
     }
