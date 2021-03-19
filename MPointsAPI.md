@@ -20,7 +20,7 @@ mpapi.isbungeecordmode();
 ```xml
 mpapi.translateUUID(String playername);
 ```
-将玩家名称转换为UUID，返回UUID
+将玩家名称转换为UUID，返回UUID  
 如果玩家不存在，返回null
 
 ```xml
@@ -36,7 +36,7 @@ mpapi.formatdouble(String sign, String amount);
 ```xml
 mpapi.getdisplay(String sign, BigDecimal balance);
 ```
-将金额转为显示消息，返回String
+将金额转为显示消息，返回String  
 比如 5,000 元
 
 ```xml
@@ -52,14 +52,14 @@ mpapi.ismaxnumber(String sign, BigDecimal amount);
 ```xml
 mpapi.changebalance(String sign, UUID u, String playername, BigDecimal amount, Boolean isadd);
 ```
-对金额进行修改，返回Integer
-isadd = true 为增加金额
-isadd = false 为扣除金额
-isadd = null 为设置金额
-返回0 表示成功
-返回1 失败，表示BC模式且没有玩家存在
-返回2 失败,表示玩家余额不足
-返回3 失败,表示玩家余额超出最大值
+对金额进行修改，返回Integer  
+isadd = true 为增加金额  
+isadd = false 为扣除金额  
+isadd = null 为设置金额  
+返回0 表示成功  
+返回1 失败，表示BC模式且没有玩家存在  
+返回2 失败,表示玩家余额不足  
+返回3 失败,表示玩家余额超出最大值  
 
 ```xml
 mpapi.getbalancetop(String sign);
@@ -93,7 +93,7 @@ Check whether BC mode is enabled, return Boolean
 ```xml
 mpapi.translateUUID(String playername);
 ```
-Convert the player name to UUID, return UUID
+Convert the player name to UUID, return UUID  
 If the player does not exist, return null
 
 ```xml
@@ -109,7 +109,7 @@ Format amount, return BigDecimal
 ```xml
 mpapi.getdisplay(String sign, BigDecimal balance);
 ```
-Convert the amount to display message, return String
+Convert the amount to display message, return String  
 For example: 5,000 dollars
 
 ```xml
@@ -125,14 +125,14 @@ Check whether the amount is the maximum value, return Boolean
 ```xml
 mpapi.changebalance(String sign, UUID u, String playername, BigDecimal amount, Boolean isadd);
 ```
-Modify the amount, return Integer
-isadd = true, add amount to balacne
-isadd = false, take amount from balance
-isadd = null, set amount to balance
-return 0 means success
-return 1 means failure that BungeeCord mode is enabled and no player is online
-return 2 means failure that the player's balance is insufficient
-return 3 means failure that the player's balance exceeds the maximum value
+Modify the amount, return Integer  
+isadd = true, add amount to balacne  
+isadd = false, take amount from balance  
+isadd = null, set amount to balance  
+return 0 means success  
+return 1 means failure that BungeeCord mode is enabled and no player is online  
+return 2 means failure that the player's balance is insufficient  
+return 3 means failure that the player's balance exceeds the maximum value  
 
 ```xml
 mpapi.getbalancetop(String sign);
