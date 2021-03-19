@@ -72,6 +72,8 @@ mpapi.getsumbalance(String sign);
 获取服务器金额总数，返回BigDecimal
 
 
+****
+
 
 English
 ```xml
