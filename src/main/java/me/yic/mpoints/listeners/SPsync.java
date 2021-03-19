@@ -71,6 +71,8 @@ public class SPsync implements PluginMessageListener {
                     isadd = true;
                 } else if (isadds.equalsIgnoreCase("subtract")) {
                     isadd = false;
+                } else if (isadds.equalsIgnoreCase("set")) {
+                    isadd = null;
                 }
                 DataCon.saveall("online", pointsign, DataFormat.formatString(pointsign, amount), isadd, null);
             }

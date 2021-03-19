@@ -68,6 +68,7 @@ public class Languages {
         ll.add("help9");
         ll.add("help10");
         ll.add("help11");
+        ll.add("help14");
         ll.add("help12");
         ll.add("help13");
         return ll;
@@ -114,6 +115,7 @@ public class Languages {
         mess.put("help9", "&6mpoints <pointname> set <player> <amount>  -  set <player>'s point to <amount>");
         mess.put("help10", "&6mpoints <pointname> give * <all/online> <amount> <reason>  -  give <all/online player> <amount> point");
         mess.put("help11", "&6mpoints <pointname> take * <all/online> <amount> <reason>  -  take <amount> point from <all/online player>");
+        mess.put("help14", "&6mpoints <pointname> set * <all/online> <amount> <reason>  -  set <all/online player>'s point to <amount>");
         mess.put("help12", "&6mpoints <pointname> balancetop hide/display <player>  -  Hide or display a <player>'s data from TOP10");
         mess.put("help13", "&6mpoints reload -  Reload message.yml");
     }
@@ -158,6 +160,7 @@ public class Languages {
         mess.put("help9", "&6mpoints <moneda> set <jugador> <cantidad>  -  Etablece al jugador cierta cantidad de esta moneda");
         mess.put("help10", "&6mpoints <moneda> give * <all/online> <cantidad> <razon>  -  Da a todos/jugadores online cierta cantidad de esta moneda");
         mess.put("help11", "&6mpoints <moneda> take * <all/online> <cantidad> <razon>  -  Toma cierta cantidad de todos/jugadores online");
+        mess.put("help14", "&6mpoints <pointname> set * <all/online> <amount> <reason>  -  set <all/online player>'s point to <amount>");
         mess.put("help12", "&6mpoints <moneda> balancetop hide/display <jugador>  -  Muestra o esconde los datos del <jugador> del TOP10");
         mess.put("help13", "&6mpoints reload -  Recarga el archivo message.yml");
     }
@@ -202,6 +205,7 @@ public class Languages {
         mess.put("help9", "&6mpoints <pointname> set <玩家> <金额>  -  设置<玩家>点数为<金额>");
         mess.put("help10", "&6mpoints <pointname> give * <all/online> <金额> <理由>  -  给与<所有/在线玩家><金额>点数");
         mess.put("help11", "&6mpoints <pointname> take * <all/online> <金额> <理由>  -  从<所有/在线玩家>取走<金额>点数");
+        mess.put("help14", "&6mpoints <pointname> set * <all/online> <金额> <理由>  -  设置<所有/在线玩家>点数为<金额>");
         mess.put("help12", "&6mpoints <pointname> balancetop hide/display <玩家>  -  将<玩家>的数据从Top10上隐藏或显示");
         mess.put("help13", "&6mpoints reload 重新加载 message.yml");
     }
@@ -246,6 +250,7 @@ public class Languages {
         mess.put("help9", "&6mpoints <pointname> set <玩家> <金額>  -  設定<玩家>點數為<金額>");
         mess.put("help10", "&6mpoints <pointname> give * <all/online> <金額> <理由>  -  給與<所有/在綫玩家><金额>點數");
         mess.put("help11", "&6mpoints <pointname> take * <all/online> <金額> <理由>  -  從<所有/在綫玩家>取走<金額>點數");
+        mess.put("help14", "&6mpoints <pointname> set * <all/online> <金額> <理由>  -  設定<所有/在綫玩家>點數為<金額>");
         mess.put("help12", "&6mpoints <pointname> balancetop hide/display <玩家>  -  將<玩家>的數據從Top10上隱藏或顯示");
         mess.put("help13", "&6mpoints reload 重新加載 message.yml");
     }

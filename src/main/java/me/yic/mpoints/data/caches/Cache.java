@@ -215,7 +215,9 @@ public class Cache {
                 output.writeUTF("online");
             }
             output.writeUTF(amount.toString());
-            if (isAdd) {
+            if (isAdd == null) {
+                output.writeUTF("set");
+            }else if (isAdd) {
                 output.writeUTF("add");
             } else {
                 output.writeUTF("subtract");

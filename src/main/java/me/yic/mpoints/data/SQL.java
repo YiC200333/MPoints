@@ -201,7 +201,10 @@ public class SQL {
         try {
             if (targettype.equalsIgnoreCase("all")) {
                 String query;
-                if (isAdd) {
+
+                if (isAdd == null) {
+                    query = " set balance = " + amount;
+                }else if (isAdd) {
                     query = " set balance = balance + " + amount;
                 } else {
                     query = " set balance = balance - " + amount;
@@ -211,7 +214,9 @@ public class SQL {
                 statement.close();
             } else if (targettype.equalsIgnoreCase("online")) {
                 StringBuilder query;
-                if (isAdd) {
+                if (isAdd == null) {
+                    query = new StringBuilder(" set balance = " + amount + " where");
+                }else if (isAdd) {
                     query = new StringBuilder(" set balance = balance + " + amount + " where");
                 } else {
                     query = new StringBuilder(" set balance = balance - " + amount + " where");

@@ -20,6 +20,7 @@ package me.yic.mpoints;
 
 import me.yic.mpoints.data.DataFormat;
 import me.yic.mpoints.data.caches.Cache;
+import me.yic.mpoints.utils.Points;
 import org.bukkit.Bukkit;
 
 import java.math.BigDecimal;
@@ -39,6 +40,10 @@ public class MPointsAPI {
 
     public UUID translateUUID(String playername) {
         return Cache.translateUUID(playername, null);
+    }
+
+    public Boolean isexistsign(String sign) {
+        return Points.pointsigns.containsKey(sign);
     }
 
     public BigDecimal formatdouble(String sign, String amount) {

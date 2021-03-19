@@ -429,9 +429,16 @@ public class CommandHandler {
 
                         BigDecimal amount = DataFormat.formatString(sign, args[2 + commandindex]);
 
-                        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-                            sender.sendMessage(sendprefix() + sendMessage(null, "invalid"));
-                            return true;
+                        if (commandName.equalsIgnoreCase("set")) {
+                            if (amount.compareTo(BigDecimal.ZERO) < 0) {
+                                sender.sendMessage(sendprefix() + sendMessage(null, "invalid"));
+                                return true;
+                            }
+                        }else{
+                            if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+                                sender.sendMessage(sendprefix() + sendMessage(null, "invalid"));
+                                return true;
+                            }
                         }
 
                         String target = "AllPlayer";
@@ -469,6 +476,24 @@ public class CommandHandler {
 
                                 Cache.changeall(sign, args[1 + commandindex], amount, false, "ADMIN_COMMAND", com);
                                 sender.sendMessage(sendprefix() + sendMessage(sign, "money_take")
+                                        .replace("%player%", target)
+                                        .replace("%amount%", amountFormatted));
+
+                                String message = sendprefix() + args[3 + commandindex];
+                                Bukkit.broadcastMessage(message);
+                                broadcastSendMessage(true, sign, null, message);
+
+                                break;
+                            }
+
+                            case "set": {
+                                if (!(sender.isOp() | sender.hasPermission("mpoints.admin.set"))) {
+                                    sendHelpMessage(sender, 1);
+                                    return true;
+                                }
+
+                                Cache.changeall(sign, args[1 + commandindex], amount, null, "ADMIN_COMMAND", com);
+                                sender.sendMessage(sendprefix() + sendMessage(sign, "money_set")
                                         .replace("%player%", target)
                                         .replace("%amount%", amountFormatted));
 
