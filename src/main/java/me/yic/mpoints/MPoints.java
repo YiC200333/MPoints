@@ -129,7 +129,7 @@ public class MPoints extends JavaPlugin {
     }
 
     public void onDisable() {
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null && papiExpansion != null) {
             try {
                 papiExpansion.unregister();
             } catch (NoSuchMethodError ignored) {
