@@ -1,6 +1,6 @@
-##About XConomyAPI
+##About MPointsAPI
 
-For MPoints 1.1.10
+For MPoints 1.1.12
 
 Chinese
 ```xml
@@ -10,7 +10,7 @@ MPointsAPI mpapi = new MPointsAPI;
 ```xml
 mpapi.getversion();
 ```
-获取XConomy版本号，返回String
+获取MPoints版本号，返回String
 
 ```xml
 mpapi.isbungeecordmode();
@@ -27,6 +27,11 @@ mpapi.translateUUID(String playername);
 mpapi.isexistsign(String sign);
 ```
 检测点数标识是否存在，返回Boolean
+
+```xml
+mpapi.getpointslist();
+```
+获取点数标识列表，返回Set&lt;String&gt;
 
 ```xml
 mpapi.formatdouble(String sign, String amount);
@@ -83,7 +88,7 @@ MPointsAPI mpapi = new MPointsAPI;
 ```xml
 mpapi.getversion();
 ```
-Gets the xconomy version number, return String
+Gets the mpoints version number, return String
 
 ```xml
 mpapi.isbungeecordmode();
@@ -100,6 +105,11 @@ If the player does not exist, return null
 mpapi.isexistsign(String sign);
 ```
 Check whether the point sign exists, return Boolean
+
+```xml
+mpapi.getpointslist();
+```
+Get point sign list，return Set&lt;String&gt;
 
 ```xml
 mpapi.formatdouble(String sign, String amount);

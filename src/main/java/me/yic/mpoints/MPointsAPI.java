@@ -25,6 +25,7 @@ import org.bukkit.Bukkit;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
@@ -44,6 +45,10 @@ public class MPointsAPI {
 
     public Boolean isexistsign(String sign) {
         return Points.pointsigns.containsKey(sign);
+    }
+
+    public Set<String> getpointslist() {
+        return Points.pointsigns.keySet();
     }
 
     public BigDecimal formatdouble(String sign, String amount) {
