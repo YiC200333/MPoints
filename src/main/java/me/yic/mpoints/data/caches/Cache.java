@@ -60,6 +60,16 @@ public class Cache {
         uidcache.put(u, v);
     }
 
+    @SuppressWarnings("all")
+    public static void removeFromUUIDCache(final String u) {
+        if (uidcache.containsKey(u)) {
+            uidcache.remove(u);
+        }
+        if (MPoints.isBungeecord()) {
+            sendmessremoveCache(u);
+        }
+    }
+
     public static void refreshFromCache(final UUID uuid, String sign) {
         if (uuid != null) {
             DataCon.getBal(uuid, sign);
@@ -217,7 +227,7 @@ public class Cache {
             output.writeUTF(amount.toString());
             if (isAdd == null) {
                 output.writeUTF("set");
-            }else if (isAdd) {
+            } else if (isAdd) {
                 output.writeUTF("add");
             } else {
                 output.writeUTF("subtract");
@@ -227,6 +237,19 @@ public class Cache {
             e.printStackTrace();
         }
         SendMessTask(stream, null, sign, isAdd, null);
+    }
+
+    public static void sendmessremoveCache(String player) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        DataOutputStream output = new DataOutputStream(stream);
+        try {
+            output.writeUTF("updateplayer");
+            output.writeUTF(MPoints.getSign());
+            output.writeUTF(player);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SendMessTask(stream, null, null, null, null);
     }
 
 

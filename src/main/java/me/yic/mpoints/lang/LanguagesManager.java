@@ -33,6 +33,8 @@ public class LanguagesManager extends Languages {
             chinesetw(mess);
         } else if (lang.equalsIgnoreCase("Spanish")) {
             spanish(mess);
+        } else if (lang.equalsIgnoreCase("Polish")) {
+            polish(mess);
         } else {
             chinese(mess);
         }

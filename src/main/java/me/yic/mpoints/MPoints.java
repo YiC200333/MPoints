@@ -110,11 +110,6 @@ public class MPoints extends JavaPlugin {
                 getServer().getMessenger().registerIncomingPluginChannel(this, "mpoints:aca", new SPsync());
                 getServer().getMessenger().registerOutgoingPluginChannel(this, "mpoints:acb");
                 logger("已开启BungeeCord同步", null);
-            } else if (!config.getBoolean("Settings.mysql")) {
-                if (config.getString("SQLite.path").equalsIgnoreCase("Default")) {
-                    logger("SQLite文件路径设置错误", null);
-                    logger("BungeeCord同步未开启", null);
-                }
             }
         }
 
@@ -123,7 +118,7 @@ public class MPoints extends JavaPlugin {
             time = 30;
         }
 
-        refresherTask = new Baltop().runTaskTimerAsynchronously(this, time * 20, time * 20);
+        refresherTask = new Baltop().runTaskTimerAsynchronously(this, time * 20L, time * 20L);
         logger(null, "===== YiC =====");
 
     }
@@ -202,18 +197,13 @@ public class MPoints extends JavaPlugin {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
+
     public static boolean isBungeecord() {
         if (!hasbcpoint) {
             return false;
         }
 
-        if (config.getBoolean("Settings.mysql")) {
-            return true;
-        }
-
-        return !config.getBoolean("Settings.mysql") & !config.getString("SQLite.path").equalsIgnoreCase("Default");
-
+        return config.getBoolean("Settings.mysql");
     }
 
     public static boolean checkup() {

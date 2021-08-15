@@ -255,6 +255,51 @@ public class Languages {
         mess.put("help13", "&6mpoints reload 重新加載 message.yml");
     }
 
+    static void polish (HashMap<String, String> mess) {
+        mess.put("prefix", "&6[MPoints]");
+        mess.put("balance", "&a%pointname% ilość: %balance%");
+        mess.put("balance_other", "&aPunkty gracza %player% %pointname% ilość: %balance%");
+        mess.put("points_list", "&a%sign% -- %pointname%");
+        mess.put("points_nosign", "&cTo oznaczenie nie istnieje");
+        mess.put("top_title", "&e========= %pointname% TOP10 =========");
+        mess.put("sum_text", "&fSuma globalna - %balance%");
+        mess.put("top_text", "&e%index%: %player% - %balance%");
+        mess.put("top_subtitle", "&7TOP10 odświeżane co 5 minut.");
+        mess.put("top_nodata", "&cBrak informacji na temat listy TOP10");
+        mess.put("top_hidden", "&aPunkty %pointname% gracza %player% są ukryte.");
+        mess.put("top_displayed", "&aPunkty gracza %player% są wyświetlane.");
+        mess.put("pay", "&cZapłacono graczowi %player% %amount% %pointname%");
+        mess.put("pay_receive", "&aOtrzymano %amount% %pointname% od %player%");
+        mess.put("pay_fail", "&cTwoje punkty %pointname% są mniejsze od %amount%");
+        mess.put("pay_self", "&cNie możesz przekazać punktów samemu/samej sobie.");
+        mess.put("noaccount", "&cPodane konto nie istnieje.");
+        mess.put("invalid", "&cNiewłaściwa wartość.");
+        mess.put("over_maxnumber", "&cPodane konto posiada już maksymalną ilość punktów, które chcesz przekazać.");
+        mess.put("money_give", "&cPrzakazano %player% %amount%");
+        mess.put("money_give_receive", "&aAdministrator podarował ci %amount%");
+        mess.put("money_take", "&cZabierasz %amount% %pointname% z konta %player%");
+        mess.put("money_take_fail", "&cPunkty %pointname% gracza %player% wynoszą mniej niż %amount%");
+        mess.put("money_take_receive", "&cAdministrator zabrał %amount% %pointname% z twojego konta");
+        mess.put("money_set", "&cUstawiono punkty %pointname% graczowi %player% na wartość %amount%");
+        mess.put("money_set_receive", "&cAdministrator ustawił twoje punkty %pointname% na %amount%");
+        mess.put("no_permission", "&cNie posiadasz permisji, by użyć tej komendy!");
+        mess.put("help_title_full", "&6=============== [MPoints] POMOC <Strona %page%> ===============");
+        mess.put("help1", "&6mpoints <nazwapunktów> balance  -  Wyświetla liczbę punktów");
+        mess.put("help2", "&6mpoints <nazwapunktów> balance <gracz>  -  Wyświetla punkty wskazanego gracza");
+        mess.put("help3", "&6mpoints <nazwapunktów> pay <gracz> <wartość>  -  Przekazuje wskazaną wartość innemu graczowi");
+        mess.put("help4", "&6mpoints <nazwapunktów> balancetop  -  Wyświetla TOP10");
+        mess.put("help5", "&6mpoints version  -  Wyświetla informacje na temat wersji pluginu");
+        mess.put("help6", "&6mpoints list  -  Lista wszystkich punktów");
+        mess.put("help7", "&6mpoints <nazwapunktów> give <gracz> <wartość>  -  Dodaje wskazanej osobie podaną liczbę punktów");
+        mess.put("help8", "&6mpoints <nazwapunktów> take <gracz> <wartość>  -  Zabiera wskazanej osobie podaną liczbę punktów");
+        mess.put("help9", "&6mpoints <nazwapunktów> set <gracz> <wartość>  -  Ustawia punkty gracza na wskazaną wartość");
+        mess.put("help10", "&6mpoints <nazwapunktów> give * <all/online> <wartość> <powód>  -  Dodaje wszystkim graczom lub graczom online wskazaną liczbę punktów");
+        mess.put("help11", "&6mpoints <nazwapunktów> take * <all/online> <wartość> <powód>  -  Zabiera wszystkim graczom lub graczom online wskazaną liczbę punktów");
+        mess.put("help14", "&6mpoints <nazwapunktów> set * <all/online> <wartość> <powód>  -  Ustawia wszystkim graczom lub graczom online wskazaną liczbę punktów");
+        mess.put("help12", "&6mpoints <nazwapunktów> balancetop hide/display <gracz>  -  Chowa lub pozwala na pokazanie liczby punktów wskazanego gracza w TOP10");
+        mess.put("help13", "&6mpoints reload -  Przeładowano message.yml");
+    }
+
 
     public static void translateFile(String string, File file) {
         try {
@@ -267,16 +312,10 @@ public class Languages {
     }
 
     static void translatorName(String lang, File file) {
-        if (lang.equalsIgnoreCase("French")) {
-            translateFile("#============================== Translator - none ==============================", file);
-        } else if (lang.equalsIgnoreCase("Spanish")) {
+        if (lang.equalsIgnoreCase("Spanish")) {
             translateFile("#============================== Translator - SYukishiro ==============================", file);
-        } else if (lang.equalsIgnoreCase("Russian")) {
-            translateFile("#============================== Translator - none ==============================", file);
-        } else if (lang.equalsIgnoreCase("Turkish")) {
-            translateFile("#============================== Translator - none ==============================", file);
-        } else if (lang.equalsIgnoreCase("Japanese")) {
-            translateFile("#============================== Translator - none ==============================", file);
+        } else if (lang.equalsIgnoreCase("Polish")) {
+            translateFile("#============================== Translator - Halmee ==============================", file);
         }
     }
 }

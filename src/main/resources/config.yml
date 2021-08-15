@@ -1,5 +1,5 @@
 Settings:
-  #Chinese ChineseTW English Spanish
+  #Chinese ChineseTW English Spanish Polish
   language: English
   #Whether to check for new version
   check-update: true
@@ -15,12 +15,6 @@ Settings:
   #Dose save transaction record
   #Only MySQL is supported
   transaction-record: true
-
-
-#SQLite settings
-SQLite:
-  #Address is the folder path
-  path: Default
 
 
 #MySQL settings

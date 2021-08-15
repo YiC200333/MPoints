@@ -5,7 +5,7 @@
 
     <groupId>me.yic</groupId>
     <artifactId>MPoints</artifactId>
-    <version>1.1.12</version>
+    <version>1.2.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -123,10 +123,6 @@
                         <relocation>
                             <pattern>com.zaxxer</pattern>
                             <shadedPattern>me.yic.libs.zaxxer</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>org.slf4j</pattern>
-                            <shadedPattern>me.yic.libs.slf4j</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

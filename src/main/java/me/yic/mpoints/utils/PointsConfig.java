@@ -42,7 +42,17 @@ public class PointsConfig extends Points {
         pointsigns.clear();
         boolean update = false;
         ConfigurationSection section = PointsFile.getConfigurationSection("");
+        int x = 0;
         for (String u : section.getKeys(false)) {
+            if (MPoints.config.getBoolean("Settings.mysql")) {
+                if (x >= 30) {
+                    break;
+                }
+            }else{
+                if (x >= 3) {
+                    break;
+                }
+            }
             if (section.contains(u + ".setting")) {
                 settingstring = ".setting";
             }
@@ -65,6 +75,7 @@ public class PointsConfig extends Points {
                 return false;
             }
             pointsigns.put(sign, u);
+            x = x + 1;
         }
         if (update) {
             try {

@@ -19,7 +19,6 @@
 package me.yic.mpoints.data;
 
 import me.yic.mpoints.MPoints;
-import me.yic.mpoints.utils.DatabaseConnection;
 import me.yic.mpoints.utils.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -50,7 +49,6 @@ public class DataCon extends MPoints {
 
         } else {
             getInstance().logger("数据保存方式", " - SQLite");
-            setupSqLiteAddress();
 
             File dataFolder = new File(getInstance().getDataFolder(), "playerdata");
             if (!dataFolder.exists() && !dataFolder.mkdirs()) {
@@ -118,18 +116,4 @@ public class DataCon extends MPoints {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private static void setupSqLiteAddress() {
-        if (config.getString("SQLite.path").equalsIgnoreCase("Default")) {
-            return;
-        }
-
-        File folder = new File(config.getString("SQLite.path"));
-        if (folder.exists()) {
-            DatabaseConnection.userdata = new File(folder, "data.db");
-        } else {
-            getInstance().logger("自定义文件夹路径不存在", null);
-        }
-
-    }
 }

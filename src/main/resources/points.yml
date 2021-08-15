@@ -1,4 +1,4 @@
-#Support up to 30 points
+#Support up to 30 points(Sqltie only supports 3)
 demo1:
   settings:
     #Point sign, Please do not modify the currency mark after confirmation

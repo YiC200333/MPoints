@@ -19,6 +19,7 @@
 package me.yic.mpoints.data;
 
 import me.yic.mpoints.MPoints;
+import me.yic.mpoints.data.caches.Cache;
 import me.yic.mpoints.utils.Points;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -99,7 +100,7 @@ public class SQLCreateAccount extends SQL {
                 if (!player.getUniqueId().toString().equals(rs.getString(1))) {
                     if (player.isOnline()) {
                         Bukkit.getScheduler().runTask(MPoints.getInstance(), () ->
-                                player.kickPlayer("[MPoints] The player with the same name exists on the server"));
+                                player.kickPlayer("[MPoints] The same data exists in the server without different UUID"));
                     }
                 }
             }
@@ -130,6 +131,7 @@ public class SQLCreateAccount extends SQL {
             e.printStackTrace();
         }
         if (!user.equals(name) && !user.equals("#")) {
+            Cache.removeFromUUIDCache(name);
             updateUser(UID, name, connection);
             MPoints.getInstance().logger(" 名称已更改!", "<#>" + name);
         }

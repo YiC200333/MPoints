@@ -82,7 +82,12 @@ public class DatabaseConnection {
             }
         } else {
             if (MPoints.config.getBoolean("Settings.mysql")) {
-                driver = ("com.mysql.jdbc.Driver");
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    driver = ("com.mysql.jdbc.Driver");
+                }
+                driver = ("com.mysql.cj.jdbc.Driver");
             } else {
                 driver = ("org.sqlite.JDBC");
             }

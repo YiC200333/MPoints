@@ -71,14 +71,18 @@ public class SPsync implements PluginMessageListener {
                     isadd = true;
                 } else if (isadds.equalsIgnoreCase("subtract")) {
                     isadd = false;
-                } else if (isadds.equalsIgnoreCase("set")) {
-                    isadd = null;
                 }
                 DataCon.saveall("online", pointsign, DataFormat.formatString(pointsign, amount), isadd, null);
             }
         } else if (type.equalsIgnoreCase("broadcast")) {
             String mess = input.readUTF();
             Bukkit.broadcastMessage(mess);
+        } else if (type.equalsIgnoreCase("updateplayer")) {
+            String u = input.readUTF();
+            if (!Cache.uidcache.containsKey(u)) {
+                return;
+            }
+            Cache.uidcache.remove(u);
         }
     }
 

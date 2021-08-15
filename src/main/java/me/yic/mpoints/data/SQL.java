@@ -84,7 +84,6 @@ public class SQL {
                 return;
             }
 
-            int x = 0;
             String query1;
             String query2;
             String query3 = "CREATE TABLE IF NOT EXISTS mpoints_" + suffix + dataname2
@@ -103,9 +102,6 @@ public class SQL {
             }
             statement.executeUpdate(query1);
             for (String sign : Points.pointsigns.keySet()) {
-                if (x > 30) {
-                    break;
-                }
                 if (MPoints.config.getBoolean("Settings.mysql")) {
                     query2 = "CREATE TABLE IF NOT EXISTS mpoints_" + suffix + sign
                             + " (UID varchar(50) not null, balance decimal(30,2) not null, hidden int(5) not null, "
@@ -116,7 +112,6 @@ public class SQL {
                             + "primary key (UID));";
                 }
                 statement.executeUpdate(query2);
-                x = x + 1;
             }
             if (MPoints.config.getBoolean("Settings.mysql") && MPoints.config.getBoolean("Settings.transaction-record")) {
                 statement.executeUpdate(query3);
