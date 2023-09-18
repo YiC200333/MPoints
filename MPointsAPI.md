@@ -3,59 +3,76 @@
 For MPoints 1.1.12
 
 Chinese
-```xml
-MPointsAPI mpapi = new MPointsAPI;
+```java
+MPointsAPI mpapi = new MPointsAPI(sign);
 ```
 
-```xml
+```java
 mpapi.getversion();
 ```
 获取MPoints版本号，返回String
 
-```xml
-mpapi.isbungeecordmode();
+```java
+mpapi.getSyncChannalType();
 ```
-是否启用BC模式，返回Boolean
+获取数据同步模式，返回SyncChannalType  
+SyncChannalType.OFF 未开启数据同步  
+SyncChannalType.BUNGEECORD 开启了数据同步，通道为Bungeecord  
+SyncChannalType.REDIS 开启了数据同步，通道为Redis
 
-```xml
-mpapi.translateUUID(String playername);
-```
-将玩家名称转换为UUID，返回UUID  
-如果玩家不存在，返回null
-
-```xml
-mpapi.isexistsign(String sign);
+```java
+mpapi.isExistsign(String sign);
 ```
 检测点数标识是否存在，返回Boolean
 
-```xml
-mpapi.getpointslist();
+```java
+mpapi.getPointsList();
 ```
 获取点数标识列表，返回Set&lt;String&gt;
 
-```xml
-mpapi.formatdouble(String sign, String amount);
+```java
+mpapi.formatdouble(String amount);
 ```
 格式化amount，返回BigDecimal
 
-```xml
-mpapi.getdisplay(String sign, BigDecimal balance);
+```java
+mpapi.getdisplay(BigDecimal balance);
 ```
 将金额转为显示消息，返回String  
 比如 5,000 元
 
-```xml
-mpapi.getbalance(String sign, UUID uid);
+```java
+xcapi.createPlayerData(uid, name);
 ```
-获取玩家金额，返回BigDecimal
+创建玩家数据，返回boolean
 
-```xml
-mpapi.ismaxnumber(String sign, BigDecimal amount);
+```java
+xcapi.getPlayerData(UUID uid);
+xcapi.getPlayerData(String name);
 ```
-检查金额是否为最大值，返回Boolean
+获取玩家数据，返回PlayerData  
+如果返回null，表示该玩家不存在
 
-```xml
-mpapi.changebalance(String sign, UUID u, String playername, BigDecimal amount, Boolean isadd);
+```java
+//获取玩家UUID
+PlayerData.getUniqueId();
+//获取玩家名称
+PlayerData.getName();
+//获取玩家金额，返回BigDecimal
+PlayerData.getBalance();
+//获取数据的标签，返回String
+PlayerData.getPsign();
+```
+关于PlayerData
+
+```java
+xcapi.ismaxnumber(BigDecimal amount);
+```
+检查金额是否为最大值，返回boolean
+
+```java
+xcapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd);
+xcapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd, String pluginname);
 ```
 对金额进行修改，返回Integer  
 isadd = true 为增加金额  
@@ -64,76 +81,94 @@ isadd = null 为设置金额
 返回0 表示成功  
 返回1 失败，表示BC模式且没有玩家存在  
 返回2 失败,表示玩家余额不足  
-返回3 失败,表示玩家余额超出最大值  
+返回3 失败,表示玩家余额超出最大值
 
-```xml
-mpapi.getbalancetop(String sign);
+```java
+xcapi.getbalancetop();
 ```
 获取TOP10名单，返回List<String>
 
-```xml
-mpapi.getsumbalance(String sign);
+```java
+xcapi.getsumbalance();
 ```
 获取服务器金额总数，返回BigDecimal
+
 
 
 ****
 
 
 English
-```xml
-MPointsAPI mpapi = new MPointsAPI;
+```java
+MPointsAPI mpapi = new MPointsAPI(sign);
 ```
 
-```xml
+```java
 mpapi.getversion();
 ```
 Gets the mpoints version number, return String
 
-```xml
-mpapi.isbungeecordmode();
+```java
+xcapi.getSyncChannalType();
 ```
-Check whether BC mode is enabled, return Boolean
+Get the data synchronization mode, return SyncChanalType  
+SyncChannalType.OFF Data synchronization is not enabled  
+SyncChannalType.BUNGEECORD Data synchronization is enabled, and the channel is Bungerecord  
+SyncChannalType.REDIS Data synchronization is enabled, and the channel is Redis
 
-```xml
-mpapi.translateUUID(String playername);
-```
-Convert the player name to UUID, return UUID  
-If the player does not exist, return null
-
-```xml
-mpapi.isexistsign(String sign);
+```java
+mpapi.isExistsign(String sign);
 ```
 Check whether the point sign exists, return Boolean
 
-```xml
-mpapi.getpointslist();
+```java
+mpapi.getPointsList();
 ```
 Get point sign list，return Set&lt;String&gt;
 
-```xml
-mpapi.formatdouble(String sign, String amount);
+```java
+xcapi.formatdouble(String amount);
 ```
 Format amount, return BigDecimal
 
-```xml
-mpapi.getdisplay(String sign, BigDecimal balance);
+```java
+xcapi.getdisplay(BigDecimal balance);
 ```
 Convert the amount to display message, return String  
 For example: 5,000 dollars
 
-```xml
-mpapi.getbalance(String sign, UUID uid);
+```java
+xcapi.createPlayerData(uid, name);
 ```
-Get player amount, return BigDecimal
+Creating player data, return boolean
 
-```xml
-mpapi.ismaxnumber(String sign, BigDecimal amount);
+```java
+xcapi.getPlayerData(UUID uid);
+xcapi.getPlayerData(String name);
 ```
-Check whether the amount is the maximum value, return Boolean
+Get player data，return PlayerData  
+If return null, this player is not existed
 
-```xml
-mpapi.changebalance(String sign, UUID u, String playername, BigDecimal amount, Boolean isadd);
+```java
+//Get player UUID
+PlayerData.getUniqueId();
+//Get player name
+PlayerData.getName();
+//Get player balance，return BigDecimal
+PlayerData.getBalance();
+//Get the sign of data，return String
+PlayerData.getPsign();
+```
+About PlayerData
+
+```java
+xcapi.ismaxnumber(BigDecimal amount);
+```
+Check whether the amount is the maximum value, return boolean
+
+```java
+xcapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd);
+xcapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd, String pluginname);
 ```
 Modify the amount, return Integer  
 isadd = true, add amount to balacne  
@@ -142,15 +177,15 @@ isadd = null, set amount to balance
 return 0 means success  
 return 1 means failure that BungeeCord mode is enabled and no player is online  
 return 2 means failure that the player's balance is insufficient  
-return 3 means failure that the player's balance exceeds the maximum value  
+return 3 means failure that the player's balance exceeds the maximum value
 
-```xml
-mpapi.getbalancetop(String sign);
+```java
+xcapi.getbalancetop();
 ```
 Get the list of TOP10, return List<String>
 
-```xml
-mpapi.getsumbalance(String sign);
+```java
+xcapi.getsumbalance();
 ```
 Get the total amount of the server, return BigDecimal
 ```

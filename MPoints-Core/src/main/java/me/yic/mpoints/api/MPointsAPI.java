@@ -30,6 +30,7 @@ import me.yic.mpoints.info.SyncChannalType;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -48,6 +49,14 @@ public class MPointsAPI {
 
     public SyncChannalType getSyncChannalType() {
         return MPointsLoad.Config.SYNCDATA_TYPE;
+    }
+
+    public Boolean isExistsign(String sign) {
+        return PointsCache.CacheContainsKey(sign);
+    }
+
+    public Set<String> getPointsList() {
+        return PointsCache.getPointsList();
     }
 
     public BigDecimal formatdouble(String amount) {
