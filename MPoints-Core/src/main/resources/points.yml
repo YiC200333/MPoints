@@ -1,0 +1,58 @@
+demo1:
+  settings:
+    #Point sign, Please do not modify the currency mark after confirmation
+    sign: demo1
+    #Initial amount of point
+    initial-bal: 0.0
+    #Does the point enable ranking
+    enable-baltop: true
+    #Are players allowed to use the pay command
+    allow-pay-command: true
+    #Tax to be paid for pay command (0.5 means 50%, 1 means 100%)
+    payment-tax: 0
+    #Whether to hide messages from OP commands
+    hide-comannd-message: false
+    #Whether to enable BungeeCord synchronization
+    enable-bungeecord: false
+  display:
+    #The name of points displayed
+    singular-name: dollar
+    plural-name: dollars
+    #Is the balance an integer
+    integer-bal: false
+    #Thousand bit separator
+    thousands-separator: ','
+    #Display format
+    display-format: '%balance% %currencyname%'
+    #Maximum amount (default is maximum)
+    max-number: '100000000000000000000000000'
+    format-balance:
+      1000: k
+      1000000: m
+  quick-command:
+    #Whether to enable quick command
+    enable: true
+    #command name
+    command: mpa
+demo2:
+  settings:
+    sign: demo2
+    initial-bal: 0.0
+    enable-baltop: true
+    allow-pay-command: true
+    payment-tax: 0
+    hide-comannd-message: false
+    enable-bungeecord: false
+  display:
+    singular-name: dollar
+    plural-name: dollars
+    integer-bal: false
+    thousands-separator: ','
+    display-format: '%balance% %currencyname%'
+    max-number: '100000000000000000000000000'
+    format-balance:
+      1000: k
+      1000000: m
+  quick-command:
+    enable: false
+    command: mpb

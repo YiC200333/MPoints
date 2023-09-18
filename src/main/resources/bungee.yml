@@ -1,4 +1,0 @@
-name: MPoints
-main: me.yic.mpoints.MPointsBungee
-version: ${project.version}
-author: YiC
