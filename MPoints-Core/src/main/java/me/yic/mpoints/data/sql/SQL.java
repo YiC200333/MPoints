@@ -118,7 +118,7 @@ public class SQL {
                 statement.executeUpdate(query3);
             }
 
-            String query2 = "";
+            String query2;
             for (String sign : PointsCache.getPointsList()) {
                 query2 = "create table if not exists " + tablePoint + "_" + sign
                         + " (UID varchar(50) not null, balance decimal(30,2) not null, hidden int(5) not null, "
@@ -179,8 +179,16 @@ public class SQL {
 
             if (MPointsLoad.Config.USERNAME_IGNORE_CASE) {
                 query = "select * from " + tableName + ", " + tablePoint + "_" + psign + " where " + tableName + ".UID = (select UID from " + tableName + " where player = ?)";
+                if (!MPointsLoad.DConfig.isMySQL()) {
+                    query += " COLLATE NOCASE";
+                }
             } else {
-                query = "select * from " + tableName + ", " + tablePoint + "_" + psign + " where " + tableName + ".UID = (select UID from " + tableName + " where binary player = ?)";
+                query = "select * from " + tableName + ", " + tablePoint + "_" + psign + " where " + tableName + ".UID = (select UID from " + tableName;
+                if (MPointsLoad.DConfig.isMySQL()) {
+                    query += " where binary player = ?)";
+                }else{
+                    query += " where player = ?)";
+                }
             }
             query += " and " + tableName + ".UID = " + tablePoint + "_" + psign + ".UID";
             PreparedStatement statement = connection.prepareStatement(query);

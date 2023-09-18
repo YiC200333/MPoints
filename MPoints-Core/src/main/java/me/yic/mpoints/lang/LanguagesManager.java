@@ -70,7 +70,7 @@ public class LanguagesManager {
         ll.add("pay_fail");
         ll.add("pay_self");
         ll.add("no_account");
-        ll.add("invalid");
+        ll.add("invalid_amount");
         ll.add("over_maxnumber");
         ll.add("money_give");
         ll.add("money_give_receive");
