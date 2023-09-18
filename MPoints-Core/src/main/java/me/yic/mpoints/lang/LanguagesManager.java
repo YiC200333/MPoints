@@ -79,6 +79,7 @@ public class LanguagesManager {
         ll.add("money_take_receive");
         ll.add("money_set");
         ll.add("money_set_receive");
+        ll.add("no_receive_permission");
         ll.add("no_permission");
         ll.add("help_title_full");
         ll.add("help1");

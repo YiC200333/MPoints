@@ -19,7 +19,6 @@
 package me.yic.mpoints;
 
 import me.yic.mpoints.info.SyncInfo;
-import me.yic.mpoints.listeners.BCPlayerEvent;
 import me.yic.mpoints.listeners.BCsync;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -35,7 +34,6 @@ public class MPointsBungee extends Plugin {
         getProxy().registerChannel("mpoints:aca");
         getProxy().registerChannel("mpoints:acb");
         getProxy().getPluginManager().registerListener(this, new BCsync());
-        getProxy().getPluginManager().registerListener(this, new BCPlayerEvent());
 
         getLogger().info("MPoints successfully enabled!");
         getLogger().info("===== YiC =====");

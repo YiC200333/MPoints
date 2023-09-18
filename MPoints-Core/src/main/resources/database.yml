@@ -8,12 +8,6 @@ Settings:
   usepool: false
 
 
-#SQLite settings
-SQLite:
-  #Address is the folder path
-  path: Default
-
-
 #MySQL settings
 MySQL:
   host: localhost

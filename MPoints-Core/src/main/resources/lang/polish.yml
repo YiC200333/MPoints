@@ -25,6 +25,7 @@ money_take_fail: '&cPunkty %pointname% gracza %player% wynoszą mniej niż %amou
 money_take_receive: '&cAdministrator zabrał %amount% %pointname% z twojego konta'
 money_set: '&cUstawiono punkty %pointname% graczowi %player% na wartość %amount%'
 money_set_receive: '&cAdministrator ustawił twoje punkty %pointname% na %amount%'
+no_receive_permission: '&cThe target user can''t receive your payment!'
 no_permission: '&cNie posiadasz permisji, by użyć tej komendy!'
 help_title_full: '&6=============== [MPoints] POMOC <Strona %page%> ==============='
 help1: '&6mpoints <nazwapunktów> balance  -  Wyświetla liczbę punktów'

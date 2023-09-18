@@ -26,7 +26,6 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.ChannelIdentifier;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import me.yic.mpoints.info.SyncInfo;
-import me.yic.mpoints.listeners.VPlayerEvent;
 import me.yic.mpoints.listeners.Vsync;
 import org.slf4j.Logger;
 
@@ -61,7 +60,6 @@ public class MPointsVelocity{
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
         server.getEventManager().register(this, new Vsync());
-        server.getEventManager().register(this, new VPlayerEvent());
     }
 
 
