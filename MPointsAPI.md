@@ -1,6 +1,6 @@
 ##About MPointsAPI
 
-For MPoints 1.1.12
+For MPoints 2.0.2
 
 Chinese
 ```java
@@ -188,4 +188,3 @@ Get the list of TOP10, return List<String>
 xcapi.getsumbalance();
 ```
 Get the total amount of the server, return BigDecimal
-```
