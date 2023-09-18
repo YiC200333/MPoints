@@ -227,10 +227,12 @@ public class SQLCreateNewAccount extends SQL {
             statement.setString(1, UID.toString());
             ResultSet rs = statement.executeQuery();
 
-            createPlayerAccount(UID.toString(), user, connection);
+            createPlayerAccount(UID.toString(), name, connection);
 
             if (rs.next()) {
                 user = rs.getString(2);
+            } else {
+                user = name;
             }
             rs.close();
             statement.close();
