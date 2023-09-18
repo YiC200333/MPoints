@@ -13,9 +13,6 @@ MPoints V2.0.0
 **Server version**  
 Spigot 1.17.1
 
-**Storage-type**  
-SQLite / MySQL
-
 **Describe the issues**  
 Issues
 
