@@ -42,13 +42,13 @@ mpapi.getdisplay(BigDecimal balance);
 比如 5,000 元
 
 ```java
-xcapi.createPlayerData(uid, name);
+mpapi.createPlayerData(uid, name);
 ```
 创建玩家数据，返回boolean
 
 ```java
-xcapi.getPlayerData(UUID uid);
-xcapi.getPlayerData(String name);
+mpapi.getPlayerData(UUID uid);
+mpapi.getPlayerData(String name);
 ```
 获取玩家数据，返回PlayerData  
 如果返回null，表示该玩家不存在
@@ -66,13 +66,13 @@ PlayerData.getPsign();
 关于PlayerData
 
 ```java
-xcapi.ismaxnumber(BigDecimal amount);
+mpapi.ismaxnumber(BigDecimal amount);
 ```
 检查金额是否为最大值，返回boolean
 
 ```java
-xcapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd);
-xcapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd, String pluginname);
+mpapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd);
+mpapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd, String pluginname);
 ```
 对金额进行修改，返回Integer  
 isadd = true 为增加金额  
@@ -84,12 +84,12 @@ isadd = null 为设置金额
 返回3 失败,表示玩家余额超出最大值
 
 ```java
-xcapi.getbalancetop();
+mpapi.getbalancetop();
 ```
 获取TOP10名单，返回List<String>
 
 ```java
-xcapi.getsumbalance();
+mpapi.getsumbalance();
 ```
 获取服务器金额总数，返回BigDecimal
 
@@ -109,7 +109,7 @@ mpapi.getversion();
 Gets the mpoints version number, return String
 
 ```java
-xcapi.getSyncChannalType();
+mpapi.getSyncChannalType();
 ```
 Get the data synchronization mode, return SyncChanalType  
 SyncChannalType.OFF Data synchronization is not enabled  
@@ -127,24 +127,24 @@ mpapi.getPointsList();
 Get point sign list，return Set&lt;String&gt;
 
 ```java
-xcapi.formatdouble(String amount);
+mpapi.formatdouble(String amount);
 ```
 Format amount, return BigDecimal
 
 ```java
-xcapi.getdisplay(BigDecimal balance);
+mpapi.getdisplay(BigDecimal balance);
 ```
 Convert the amount to display message, return String  
 For example: 5,000 dollars
 
 ```java
-xcapi.createPlayerData(uid, name);
+mpapi.createPlayerData(uid, name);
 ```
 Creating player data, return boolean
 
 ```java
-xcapi.getPlayerData(UUID uid);
-xcapi.getPlayerData(String name);
+mpapi.getPlayerData(UUID uid);
+mpapi.getPlayerData(String name);
 ```
 Get player data，return PlayerData  
 If return null, this player is not existed
@@ -162,13 +162,13 @@ PlayerData.getPsign();
 About PlayerData
 
 ```java
-xcapi.ismaxnumber(BigDecimal amount);
+mpapi.ismaxnumber(BigDecimal amount);
 ```
 Check whether the amount is the maximum value, return boolean
 
 ```java
-xcapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd);
-xcapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd, String pluginname);
+mpapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd);
+mpapi.changePlayerBalance(UUID u, String playername, BigDecimal amount, Boolean isadd, String pluginname);
 ```
 Modify the amount, return Integer  
 isadd = true, add amount to balacne  
@@ -180,11 +180,11 @@ return 2 means failure that the player's balance is insufficient
 return 3 means failure that the player's balance exceeds the maximum value
 
 ```java
-xcapi.getbalancetop();
+mpapi.getbalancetop();
 ```
 Get the list of TOP10, return List<String>
 
 ```java
-xcapi.getsumbalance();
+mpapi.getsumbalance();
 ```
 Get the total amount of the server, return BigDecimal
