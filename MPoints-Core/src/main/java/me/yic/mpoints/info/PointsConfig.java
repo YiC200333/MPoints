@@ -34,7 +34,7 @@ public class PointsConfig {
     public PointsConfig(String cpath) {
         this.cpath = cpath;
         this.INITIAL_BAL = config.getDouble(cpath +".settings.initial-bal");
-        this.P_SIGN = config.getString(cpath +".settings.sign");
+        this.P_SIGN = config.getString(cpath +".settings.sign").toLowerCase();
         this.ENABLE_BALTOP = config.getBoolean(cpath +".settings.enable-baltop");
         this.ALLOW_PAY = config.getBoolean(cpath +".settings.allow-pay-command");
         this.HIDE_OP_COMMAND = config.getBoolean(cpath +".settings.hide-comannd-message");

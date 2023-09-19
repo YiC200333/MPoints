@@ -8,13 +8,14 @@
     <version>${revision}</version>
     <modules>
         <module>MPoints-Bukkit</module>
+        <module>MPoints-Paper</module>
         <module>MPoints-Core</module>
     </modules>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <revision>2.0.4</revision>
+        <revision>2.0.5</revision>
     </properties>
 
     <build>
