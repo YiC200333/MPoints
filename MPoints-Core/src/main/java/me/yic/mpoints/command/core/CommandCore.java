@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
 public class CommandCore {
 
     protected static String PREFIX = translateColorCodes("prefix");
-    protected static String[] systemcommond = new String[]{"reload", "deldata", "reload", "help"};
+    protected static String[] systemcommond = new String[]{"reload", "deldata", "list", "help"};
 
     public static boolean onCommand(CSender sender, String[] args) {
         if (args.length == 0){

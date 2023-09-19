@@ -94,10 +94,10 @@ public class CommandBalancetop extends CommandCore{
                 UUID targetUUID = pd.getUniqueId();
                 if (args[0].equalsIgnoreCase("hide")) {
                     DataLink.setTopBalHide(psign, targetUUID, 1);
-                    sendMessages(sender, PREFIX + translateColorCodes("top_hidden").replace("%player%", args[1]));
+                    sendMessages(sender, PREFIX + translateColorCodes(psign, "top_hidden").replace("%player%", args[1]));
                 } else if (args[0].equalsIgnoreCase("display")) {
                     DataLink.setTopBalHide(psign, targetUUID, 0);
-                    sendMessages(sender, PREFIX + translateColorCodes("top_displayed").replace("%player%", args[1]));
+                    sendMessages(sender, PREFIX + translateColorCodes(psign, "top_displayed").replace("%player%", args[1]));
                 }
 
             }
