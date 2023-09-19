@@ -4,7 +4,7 @@
 This project only open-sources the core code and cannot be used directly after compilation.
 
 ## 关于 About
-支持在服务器内创建不同的点数，每个点数都可以单独配置
+支持在服务器内创建不同的点数，每个点数都可以单独配置  
 以MySQL保存玩家数据，具有缓存功能，且支持BungeeCord/Velocity子服的数据同步, 或者通过Redis进行数据同步
 
 
