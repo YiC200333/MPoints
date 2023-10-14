@@ -181,7 +181,7 @@ public class SQLCreateNewAccount extends SQL {
 
     public static void createDUUIDLink(String UUID, String DUUID, Connection co_a) {
         try {
-            String query = "INSERT INTO " + tableUUIDName + "(UUID,DUUID) values(?,?) ON DUPLICATE KEY UPDATE DUUID = ?";
+            String query = "INSERT IGNORE INTO " + tableUUIDName + "(UUID,DUUID) values(?,?) ON DUPLICATE KEY UPDATE DUUID = ?";
 
             PreparedStatement statement = co_a.prepareStatement(query);
             statement.setString(1, UUID);
@@ -247,17 +247,6 @@ public class SQLCreateNewAccount extends SQL {
         }
     }
 
-    //private static void updateUUID(String UID, String user, Connection co_a) {
-    //    try {
-    //        PreparedStatement statement = co_a.prepareStatement("update " + tableName + " set UID = ? where player = ?");
-    //        statement.setString(1, UID);
-    //        statement.setString(2, user);
-    //        statement.executeUpdate();
-    //        statement.close();
-    //    } catch (SQLException e) {
-    //        e.printStackTrace();
-    //    }
-    //}
 
     private static void syncOnlineUUID(String oldname, String newname, UUID newUUID) {
         Cache.syncOnlineUUIDCache(oldname, newname, newUUID);
