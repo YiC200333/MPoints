@@ -43,19 +43,19 @@ public class MPointsAPI {
         this.psign = psign;
     }
 
-    public String getversion() {
+    public static String getversion() {
         return MPoints.PVersion;
     }
 
-    public SyncChannalType getSyncChannalType() {
+    public static SyncChannalType getSyncChannalType() {
         return MPointsLoad.Config.SYNCDATA_TYPE;
     }
 
-    public Boolean isExistsign(String sign) {
+    public static Boolean isExistsign(String sign) {
         return PointsCache.CacheContainsKey(sign);
     }
 
-    public Set<String> getPointsList() {
+    public static Set<String> getPointsList() {
         return PointsCache.getPointsList();
     }
 

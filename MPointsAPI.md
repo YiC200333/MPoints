@@ -4,16 +4,12 @@ For MPoints 2.0.2
 
 Chinese
 ```java
-MPointsAPI mpapi = new MPointsAPI(sign);
-```
-
-```java
-mpapi.getversion();
+MPointsAPI.getversion();
 ```
 获取MPoints版本号，返回String
 
 ```java
-mpapi.getSyncChannalType();
+MPointsAPI.getSyncChannalType();
 ```
 获取数据同步模式，返回SyncChannalType  
 SyncChannalType.OFF 未开启数据同步  
@@ -21,14 +17,18 @@ SyncChannalType.BUNGEECORD 开启了数据同步，通道为Bungeecord
 SyncChannalType.REDIS 开启了数据同步，通道为Redis
 
 ```java
-mpapi.isExistsign(String sign);
+MPointsAPI.isExistsign(String sign);
 ```
 检测点数标识是否存在，返回Boolean
 
 ```java
-mpapi.getPointsList();
+MPointsAPI.getPointsList();
 ```
 获取点数标识列表，返回Set&lt;String&gt;
+
+```java
+MPointsAPI mpapi = new MPointsAPI(sign);
+```
 
 ```java
 mpapi.formatdouble(String amount);
@@ -100,16 +100,12 @@ mpapi.getsumbalance();
 
 English
 ```java
-MPointsAPI mpapi = new MPointsAPI(sign);
-```
-
-```java
-mpapi.getversion();
+MPointsAPI.getversion();
 ```
 Gets the mpoints version number, return String
 
 ```java
-mpapi.getSyncChannalType();
+MPointsAPI.getSyncChannalType();
 ```
 Get the data synchronization mode, return SyncChanalType  
 SyncChannalType.OFF Data synchronization is not enabled  
@@ -117,14 +113,18 @@ SyncChannalType.BUNGEECORD Data synchronization is enabled, and the channel is B
 SyncChannalType.REDIS Data synchronization is enabled, and the channel is Redis
 
 ```java
-mpapi.isExistsign(String sign);
+MPointsAPI.isExistsign(String sign);
 ```
 Check whether the point sign exists, return Boolean
 
 ```java
-mpapi.getPointsList();
+MPointsAPI.getPointsList();
 ```
 Get point sign list，return Set&lt;String&gt;
+
+```java
+MPointsAPI mpapi = new MPointsAPI(sign);
+```
 
 ```java
 mpapi.formatdouble(String amount);
