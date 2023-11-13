@@ -305,7 +305,7 @@ public class SQL {
             statement.executeUpdate();
             statement.close();
             if (MPointsLoad.Config.UUIDMODE.equals(UUIDMode.SEMIONLINE)) {
-                query = "delete from " + tablePoint + "_" + psign + " where DUUID = ?";
+                query = "delete from " + tableUUIDName + "_" + psign + " where DUUID = ?";
                 statement = connection.prepareStatement(query);
                 statement.setString(1, UUID);
                 statement.executeUpdate();
