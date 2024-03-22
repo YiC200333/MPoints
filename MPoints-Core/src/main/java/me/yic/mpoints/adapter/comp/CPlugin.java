@@ -31,6 +31,10 @@ public class CPlugin implements iPlugin {
     }
 
     @Override
+    public boolean isSync() {
+        return false;
+    }
+    @Override
     public void runTaskAsynchronously(Runnable ra) {
 
     }
